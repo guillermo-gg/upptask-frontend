@@ -1,4 +1,9 @@
 module.exports = {
+  settings: {
+    "import/resolver": {
+      typescript: {}, // this loads <rootdir>/tsconfig.json to eslint
+    },
+  },
   extends: "airbnb-typescript-prettier",
   rules: {
     "import/prefer-default-export": "off",
