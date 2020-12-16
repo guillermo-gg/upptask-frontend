@@ -16,5 +16,6 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "warn",
     "react/require-default-props": "off",
     "consistent-return": "off",
+    "@typescript-eslint/ban-types": "warn",
   },
 };
