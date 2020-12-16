@@ -63,6 +63,12 @@ const Board: FunctionComponent<BoardProps> = (props) => {
   };
 
   const onDragEnd = ({ source, destination }: DropResult) => {
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    ) {
+      return;
+    }
     updateColumns(source, destination);
   };
 
