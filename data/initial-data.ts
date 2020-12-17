@@ -25,4 +25,14 @@ export const columns: ColumnT[] = [
     name: "To do",
     tasks,
   },
+  {
+    id: "2",
+    name: "Doing",
+    tasks: [],
+  },
+  {
+    id: "3",
+    name: "Done",
+    tasks: [],
+  },
 ];

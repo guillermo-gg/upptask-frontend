@@ -148,12 +148,17 @@ const boxModelFix = css`
 const globalStyles = css`
   html {
     font-family: ${FONT_FAMILIES.body};
-    
+
     font-size: 16px;
-    
+
     ${smallScreenQuery(css`
       font-size: 14px;
     `)}
+  }
+
+  button {
+    cursor: pointer;
+  }
 `;
 
 export const GlobalStyles = createGlobalStyle`
