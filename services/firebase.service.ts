@@ -23,7 +23,8 @@ if (!firebase.apps.length) {
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
 }
 
 export const auth = firebase.auth();
+
+export const db = firebase.firestore();

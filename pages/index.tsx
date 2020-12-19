@@ -1,6 +1,6 @@
 import { authContext } from "context/auth/auth.context";
 import Link from "next/link";
-import { FunctionComponent, useContext } from "react";
+import { FunctionComponent, useContext, useEffect } from "react";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type IndexProps = {};
