@@ -1,7 +1,9 @@
 import { TaskCard } from "components/TaskCard";
 import TaskCardPlaceholder from "components/TaskCard/AddTaskCardPlaceholder";
+import { tasksContext } from "context/tasks/tasks.context";
 import { ColumnT } from "data/types";
-import React, { FunctionComponent } from "react";
+import * as faker from "faker";
+import React, { FunctionComponent, useContext } from "react";
 import styled, { css } from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
 
@@ -48,6 +50,8 @@ const Column: FunctionComponent<ColumnProps> = ({
   tasks,
   isDragging,
 }) => {
+  const { addTaskToColumn, deleteTask } = useContext(tasksContext);
+
   return (
     <Container>
       <h1>{name}</h1>
@@ -63,13 +67,15 @@ const Column: FunctionComponent<ColumnProps> = ({
                 key={taskId}
                 id={taskId}
                 index={index}
-                onClickDelete={() => alert(`Delete ${content}`)}
+                onClickDelete={() => deleteTask(id, index)}
               >
                 {content}
               </TaskCard>
             ))}
             {droppableProvided.placeholder}
-            <TaskCardPlaceholder onClickAdd={() => alert("add")} />
+            <TaskCardPlaceholder
+              onClickAdd={() => addTaskToColumn(faker.company.bsBuzz(), id)}
+            />
           </DropArea>
         )}
       </Droppable>
