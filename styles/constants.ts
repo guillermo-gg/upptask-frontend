@@ -16,7 +16,8 @@ export const COLORS = {
   },
   background: {
     base: "#f3f3f3",
-    border: "#b8b8b8",
+    borderLight: "#d3d3d3",
+    borderDark: "#b8b8b8",
     fillLight: "#d4d4d4",
     fillDark: "#989898",
   },

@@ -50,7 +50,7 @@ const DropArea = styled.ul<{
   ${({ isDragging }) =>
     isDragging
       ? css`
-          border: 1px dashed lightgray;
+          border: 1px dashed ${COLORS.background.borderLight};
         `
       : null}
 `;

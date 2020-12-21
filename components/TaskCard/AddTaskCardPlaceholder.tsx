@@ -1,6 +1,6 @@
 import { CARD_CONSTANTS, TaskCardContainer } from "components/TaskCard/styles";
 import React, { FunctionComponent } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { COLORS, TRANSITION } from "styles/constants";
 import { flexFullCenterRow } from "styles/mixins";
 
@@ -9,10 +9,10 @@ const InnerContainer = styled.button`
   height: 100%;
   ${flexFullCenterRow};
 
-  border: 1px solid ${COLORS.background.border};
+  border: 1px solid ${COLORS.background.borderDark};
   border-radius: ${CARD_CONSTANTS.borderRadius};
   ${TRANSITION};
-  color: ${COLORS.background.border};
+  color: ${COLORS.background.borderDark};
 
   &:hover {
     border: 1px solid ${COLORS.elements.buttonText};
@@ -27,7 +27,11 @@ const TaskCardPlaceholder: FunctionComponent<TaskCardPlaceholderProps> = ({
   onClickAdd,
 }) => {
   return (
-    <TaskCardContainer>
+    <TaskCardContainer
+      styles={css`
+        margin-bottom: 0;
+      `}
+    >
       <InnerContainer onClick={onClickAdd}>+ Add</InnerContainer>
     </TaskCardContainer>
   );
