@@ -1,36 +1,47 @@
-export const COLORS = {
-  background: "#120b2c",
-  backgroundAccent: "#1a0e40",
-  theme: "#1d0e67",
-  accent: "E7A412",
-  backgroundLight: "#e7e7f1",
-  textLight: "#FFFFFF",
-  darkGrayText: "#7c7c7c",
-  mediumGrayText: "#b3b3b3",
-  lightGrayText: "#CBCBCB",
+import { css } from "styled-components";
 
-  articleBackground: "#FFFFFF", // White
-  articleTextColor: "#292929",
+export const COLORS = {
+  elements: {
+    headline: "#1f1235",
+    subHeadline: "#1b1425",
+    button: "#ff6e6c",
+    buttonText: "#1f1235",
+  },
+  illustration: {
+    stroke: "#1f1235",
+    main: "#FFFFFF",
+    highlight: "#ff6e6c",
+    secondary: "#67568c",
+    tertiary: "#fbdd74",
+  },
+  background: {
+    base: "#f3f3f3",
+    border: "#b8b8b8",
+    fillLight: "#d4d4d4",
+    fillDark: "#989898",
+  },
 };
+
+export const ELEVATION = {
+  low: css`
+    box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.25);
+  `,
+  focus: css`
+    box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.25);
+  `,
+};
+
+export const TEXT = {
+  title: css`
+    font-size: 2.5rem;
+    font-weight: 600;
+  `,
+};
+
+export const TRANSITION = css`
+  transition: 0.2s all ease;
+`;
 
 export const TRANSPARENT = "rgba(255, 255, 255, 0)";
 
-export const FONT_FAMILIES = {
-  title: "Barlow, sans-serif",
-  body: "Roboto, sans-serif",
-  article: '"Source Serif Pro", serif',
-};
-
-export const GOLDEN_RATIO = 1.61803398875;
-
-export const SMALL_SCREEN_SIZE = 600; // px
-
-export const NARROW_CONTAINER_SIZE = 800; // px
-
-export const WIDE_CONTAINER_SIZE = 1000; // px
-
-/**
- * How early (in pixels) the media query for the container width is
- * triggered (to leave a margin at the sides before going off).
- */
-export const DEFAULT_MEDIA_QUERY_CONTAINER_OFFSET = 100; // px
+export const FONT_FAMILY = "Roboto, sans-serif";

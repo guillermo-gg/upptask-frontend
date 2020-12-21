@@ -1,3 +1,4 @@
+import { PrivateContainer } from "components/PrivateContainer";
 import { AuthProvider } from "context/auth/auth.context";
 import type { AppProps } from "next/app";
 
@@ -8,7 +9,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <>
       <GlobalStyles />
       <AuthProvider>
-        <Component {...pageProps} />
+        <PrivateContainer>
+          <Component {...pageProps} />
+        </PrivateContainer>
       </AuthProvider>
     </>
   );

@@ -1,6 +1,7 @@
-import { TaskCardContainer } from "components/TaskCard/styles";
+import { CARD_CONSTANTS, TaskCardContainer } from "components/TaskCard/styles";
 import React, { FunctionComponent } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { COLORS, TRANSITION } from "styles/constants";
 import { flexFullCenterRow } from "styles/mixins";
 
 const InnerContainer = styled.button`
@@ -8,11 +9,14 @@ const InnerContainer = styled.button`
   height: 100%;
   ${flexFullCenterRow};
 
-  border: 1px solid lightgray;
-  transition: 0.2s all ease;
+  border: 1px solid ${COLORS.background.border};
+  border-radius: ${CARD_CONSTANTS.borderRadius};
+  ${TRANSITION};
+  color: ${COLORS.background.border};
 
   &:hover {
-    border: 1px solid black;
+    border: 1px solid ${COLORS.elements.buttonText};
+    color: ${COLORS.elements.buttonText};
   }
 `;
 

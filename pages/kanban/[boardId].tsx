@@ -1,22 +1,9 @@
+import { Kanban } from "components/Kanban";
 import { tasksContext, TasksProvider } from "context/tasks/tasks.context";
 import { FunctionComponent, ReactElement, useContext, useState } from "react";
-import styled from "styled-components";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 import { Column } from "components/Column";
-
-const KanbanContainer = styled.div`
-  margin: 2rem 1rem;
-  display: flex;
-
-  & > * {
-    margin-right: 20px;
-
-    &:last-of-type {
-      margin-right: 0;
-    }
-  }
-`;
 
 type BoardProps = {};
 const Board: FunctionComponent<BoardProps> = (props) => {
@@ -46,11 +33,11 @@ const Board: FunctionComponent<BoardProps> = (props) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
-      <KanbanContainer>
+      <Kanban>
         {columns.map((column) => (
           <Column key={column.id} {...column} isDragging={isDragging} />
         ))}
-      </KanbanContainer>
+      </Kanban>
     </DragDropContext>
   );
 };

@@ -1,6 +1,5 @@
 import { createGlobalStyle, css } from "styled-components";
-import { smallScreenQuery } from "./mixins";
-import { FONT_FAMILIES } from "./constants";
+import { FONT_FAMILY } from "./constants";
 
 const resetCSS = css`
   /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -145,15 +144,30 @@ const boxModelFix = css`
   }
 `;
 
+const resetButton = css`
+  button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+
+    background: transparent;
+
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+
+    /* Normalize \`line-height\`. Cannot be changed from \`normal\` in Firefox 4+. */
+    line-height: normal;
+  }
+`;
+
 const globalStyles = css`
   html {
-    font-family: ${FONT_FAMILIES.body};
+    font-family: ${FONT_FAMILY};
 
     font-size: 16px;
-
-    ${smallScreenQuery(css`
-      font-size: 14px;
-    `)}
   }
 
   button {
@@ -163,6 +177,7 @@ const globalStyles = css`
 
 export const GlobalStyles = createGlobalStyle`
   ${resetCSS};
+  ${resetButton};
   ${boxModelFix};
   ${globalStyles};
 `;

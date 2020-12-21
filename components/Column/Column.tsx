@@ -6,19 +6,34 @@ import * as faker from "faker";
 import React, { FunctionComponent, useContext } from "react";
 import styled, { css } from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
+import { COLORS } from "styles/constants";
 
 const Container = styled.div`
   width: 300px;
   min-height: 200px;
-  padding: 20px;
-  border: 2px solid gray;
+  padding: 10px;
   display: flex;
   flex-direction: column;
+`;
 
-  h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
+const ColumnTitle = styled.div`
+  display: flex;
+  align-items: center;
+  //justify-content: space-between;
+  padding: 10px;
+  height: 40px;
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  span {
+    border-radius: 15px;
+    background: ${COLORS.illustration.tertiary};
+    padding: 2px 10px;
   }
 `;
 
@@ -26,17 +41,16 @@ const DropArea = styled.ul<{
   isDragging?: boolean;
 }>`
   flex: 1;
+  padding: 10px;
 
-  // TODO: Fix this: not working
-  padding-bottom: -10px;
-
-  border: 2px dashed transparent;
+  border-radius: 10px;
+  border: 1px dashed transparent;
   transition: 0.5s all ease;
 
   ${({ isDragging }) =>
     isDragging
       ? css`
-          border: 2px dashed lightgray;
+          border: 1px dashed lightgray;
         `
       : null}
 `;
@@ -54,7 +68,10 @@ const Column: FunctionComponent<ColumnProps> = ({
 
   return (
     <Container>
-      <h1>{name}</h1>
+      <ColumnTitle>
+        <h2>{name}</h2>
+        <span>{tasks.length}</span>
+      </ColumnTitle>
       <Droppable droppableId={id}>
         {(droppableProvided) => (
           <DropArea
