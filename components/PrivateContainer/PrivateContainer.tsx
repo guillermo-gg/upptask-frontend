@@ -1,5 +1,11 @@
 import { authContext } from "context/auth/auth.context";
-import React, { FunctionComponent, useContext, useState } from "react";
+import { useRouter } from "next/router";
+import React, {
+  FunctionComponent,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import styled from "styled-components";
 
 import { COLORS } from "styles/constants";
@@ -33,6 +39,14 @@ type PrivateContainerProps = {};
 const PrivateContainer: FunctionComponent<PrivateContainerProps> = ({
   children,
 }) => {
+  const { userId } = useContext(authContext);
+
+  const { replace } = useRouter();
+
+  useEffect(() => {
+    if (!userId) replace("/");
+  }, [replace, userId]);
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const { user, signOut, signInWithGoogle } = useContext(authContext);

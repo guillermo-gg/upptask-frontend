@@ -10,6 +10,7 @@ import { AuthUser, createUser, syncUser, User } from "services/user.service";
 import { auth } from "services/firebase.service";
 
 type AuthContext = {
+  userId: string;
   user: User;
   signInWithGoogle: () => Promise<firebase.auth.UserCredential>;
   signOut: () => Promise<void>;
@@ -70,6 +71,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
   return (
     <authContext.Provider
       value={{
+        userId,
         user,
         signInWithGoogle,
         signOut,
