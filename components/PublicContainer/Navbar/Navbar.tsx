@@ -60,7 +60,7 @@ const Navbar: FunctionComponent<NavbarProps> = (props) => {
           <ButtonSecondary type="button" onClick={signOut}>
             Log out
           </ButtonSecondary>
-          <ButtonCTA type="button" onClick={() => router.push("/kanban")}>
+          <ButtonCTA type="button" onClick={() => router.push("/boards")}>
             Boards
           </ButtonCTA>
         </>
