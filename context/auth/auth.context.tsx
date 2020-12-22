@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import { userInfo } from "os";
 import React, {
   useState,
   useEffect,
@@ -12,6 +13,7 @@ import { auth } from "services/firebase.service";
 type AuthContext = {
   userId: string;
   user: User;
+  loading: boolean;
   signInWithGoogle: () => Promise<firebase.auth.UserCredential>;
   signOut: () => Promise<void>;
 };
@@ -37,20 +39,18 @@ const getCleanUser = ({
 export const AuthProvider: FunctionComponent = ({ children }) => {
   const [userId, setUserId] = useState<string>(null);
   const [user, setUser] = useState<User>(null);
+  const [loading, setLoading] = useState(true);
 
   // Creates / Updates the user in Firestore on auth change.
   useEffect(
     () =>
-      auth.onAuthStateChanged((newUser) => {
+      auth.onAuthStateChanged(async (newUser) => {
         if (newUser) {
           // Create / Update the user.
-          createUser(newUser.uid, getCleanUser(newUser)).then(() => {
-            setUserId(newUser.uid);
-          });
-        } else {
-          setUser(null);
-          setUserId(null);
+          await createUser(newUser.uid, getCleanUser(newUser));
+          setUserId(newUser.uid);
         }
+        setLoading(false);
       }),
     [user]
   );
@@ -69,13 +69,18 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     return auth.signInWithPopup(provider);
   };
 
-  const signOut = () => auth.signOut();
+  const signOut = async () => {
+    await auth.signOut();
+    setUser(null);
+    setUserId(null);
+  };
 
   return (
     <authContext.Provider
       value={{
         userId,
         user,
+        loading,
         signInWithGoogle,
         signOut,
       }}

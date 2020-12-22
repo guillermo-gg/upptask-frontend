@@ -39,13 +39,13 @@ type PrivateContainerProps = {};
 const PrivateContainer: FunctionComponent<PrivateContainerProps> = ({
   children,
 }) => {
-  const { userId } = useContext(authContext);
+  const { userId, loading } = useContext(authContext);
 
   const { replace } = useRouter();
 
   useEffect(() => {
-    if (!userId) replace("/");
-  }, [replace, userId]);
+    if (!userId && !loading) replace("/");
+  }, [loading, replace, userId]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
