@@ -1,4 +1,5 @@
 import { Kanban } from "components/Kanban";
+import { authContext } from "context/auth/auth.context";
 import { tasksContext, TasksProvider } from "context/tasks/tasks.context";
 import { FunctionComponent, ReactElement, useContext, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
@@ -34,18 +35,23 @@ const Board: FunctionComponent<BoardProps> = (props) => {
   return (
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
       <Kanban>
-        {columns.map((column) => (
-          <Column key={column.id} {...column} isDragging={isDragging} />
-        ))}
+        {columns &&
+          columns.map((column) => (
+            <Column key={column.id} {...column} isDragging={isDragging} />
+          ))}
       </Kanban>
     </DragDropContext>
   );
 };
 
-const BoardWithContext = (): ReactElement => (
-  <TasksProvider>
-    <Board />
-  </TasksProvider>
-);
+const BoardWithContext = (): ReactElement => {
+  const { user } = useContext(authContext);
+
+  return user?.uid ? (
+    <TasksProvider userId={user?.uid}>
+      <Board />
+    </TasksProvider>
+  ) : null;
+};
 
 export default BoardWithContext;

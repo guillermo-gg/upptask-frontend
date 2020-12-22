@@ -4,23 +4,13 @@ import React, {
   useEffect,
   createContext,
   FunctionComponent,
-  useContext,
 } from "react";
-import { createUser } from "services/db.service";
+import { AuthUser, createUser, syncUser, User } from "services/user.service";
 
 import { auth } from "services/firebase.service";
 
-type FirebaseUser = {
-  displayName: string | null;
-  email: string | null;
-  phoneNumber: string | null;
-  photoURL: string | null;
-  providerId: string;
-  uid: string;
-};
-
 type AuthContext = {
-  user: FirebaseUser;
+  user: User;
   signInWithGoogle: () => Promise<firebase.auth.UserCredential>;
   signOut: () => Promise<void>;
 };
@@ -34,7 +24,7 @@ const getCleanUser = ({
   photoURL,
   providerId,
   uid,
-}: firebase.User) => ({
+}: firebase.User): AuthUser => ({
   displayName,
   email,
   phoneNumber,
@@ -44,20 +34,28 @@ const getCleanUser = ({
 });
 
 export const AuthProvider: FunctionComponent = ({ children }) => {
-  const [user, setUser] = useState<FirebaseUser>(null);
-  const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string>();
+  const [user, setUser] = useState<User>(null);
 
-  useEffect(() => {
-    if (user) createUser(user.uid, { ...user });
-  }, [user]);
+  // Creates / Updates the user in Firestore on auth change.
+  useEffect(
+    () =>
+      auth.onAuthStateChanged((newUser) => {
+        if (newUser) {
+          // Create / Update the user.
+          createUser(newUser.uid, getCleanUser(newUser)).then(() => {
+            setUserId(newUser.uid);
+          });
+        }
+      }),
+    [user]
+  );
 
-  // Subscribe to auth changes on mount, and unsubscribe on unmount.
+  // Sets user for context on auth changes
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((newUser) => {
-      setUser(newUser ? getCleanUser(newUser) : newUser);
-    });
-    return () => unsubscribe();
-  }, []);
+    if (!userId) return;
+    return syncUser(userId, setUser);
+  }, [userId]);
 
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();

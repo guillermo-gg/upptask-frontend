@@ -1,5 +1,5 @@
 import { CARD_CONSTANTS, TaskCardContainer } from "components/TaskCard/styles";
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled, { css } from "styled-components";
 import { ELEVATION, TRANSITION } from "styles/constants";
@@ -34,7 +34,7 @@ const DeleteIcon = styled.button`
   ${TRANSITION};
   padding: 2px;
   img {
-    height: 100%;
+    height: 20px;
     max-width: 20px;
   }
 `;
@@ -50,8 +50,6 @@ const TaskCard: FunctionComponent<TaskCardProps> = ({
   children,
   onClickDelete,
 }) => {
-  const [isMouseOver, setIsMouseOver] = useState(false);
-
   return (
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot) => (
@@ -62,8 +60,6 @@ const TaskCard: FunctionComponent<TaskCardProps> = ({
         >
           <TaskCardContent
             isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}
-            onMouseEnter={() => setIsMouseOver(true)}
-            onMouseLeave={() => setIsMouseOver(false)}
           >
             <span>{children}</span>
             <DeleteIcon type="button" onClick={onClickDelete}>

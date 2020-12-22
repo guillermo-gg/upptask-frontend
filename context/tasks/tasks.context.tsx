@@ -4,20 +4,17 @@ import {
   Dispatch,
   FunctionComponent,
   SetStateAction,
+  useEffect,
   useState,
 } from "react";
-import { columns as initialColumns } from "context/tasks/initial-data";
-
-export type TaskT = {
-  id: string;
-  content: string;
-};
-
-export type ColumnT = {
-  id: string;
-  name: string;
-  tasks: TaskT[];
-};
+import { v4 as uuid } from "uuid";
+import {
+  ColumnT,
+  syncColumnsId,
+  syncTasks,
+  TaskT,
+  updateFirestoreTasks,
+} from "services/tasks.service";
 
 type AddTaskToColumnCallback = (content: string, columnId: string) => void;
 
@@ -41,31 +38,45 @@ type TasksContextT = {
   moveTask: MoveTaskCallback;
 };
 
-// export const initialColumns = [];
-
 export const tasksContext = createContext<TasksContextT | null>(null);
 
 const { Provider } = tasksContext;
 
 // Using Immer:
 /* eslint-disable no-param-reassign */
-export const TasksProvider: FunctionComponent = ({ children }) => {
-  const [columns, setColumns] = useState<ColumnT[]>(initialColumns);
+type TaskProviderProps = {
+  userId?: string;
+};
+export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
+  children,
+  userId,
+}) => {
+  const [columns, setColumns] = useState<ColumnT[]>(null);
+  const [columnsId, setColumnsId] = useState<string>();
 
-  const [lastTaskId, setLastTaskId] = useState(100);
+  // Get columns id and sync to state. Will create an empty document with
+  // the columns if none is found.
+  useEffect(() => {
+    syncColumnsId(userId, setColumnsId);
+  }, [userId]);
 
-  const getNewTaskId = () => {
-    const newTaskId = lastTaskId + 1;
-    setLastTaskId((current) => current + 1);
-    return newTaskId;
-  };
+  // Fetch tasks:
+  useEffect(() => {
+    if (columnsId) syncTasks(columnsId, setColumns);
+  }, [columnsId]);
+
+  // Update Firestore:
+  useEffect(() => {
+    if (!columns) return;
+    updateFirestoreTasks(columnsId, columns);
+  }, [columns, columnsId]);
 
   const addTaskToColumn: AddTaskToColumnCallback = (
     content: string, // TaskContent
     columnId: string
   ) => {
     const newTask = {
-      id: String(getNewTaskId()),
+      id: uuid(),
       content,
     };
 

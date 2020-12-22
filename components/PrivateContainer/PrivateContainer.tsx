@@ -1,4 +1,5 @@
-import React, { FunctionComponent, useState } from "react";
+import { authContext } from "context/auth/auth.context";
+import React, { FunctionComponent, useContext, useState } from "react";
 import styled from "styled-components";
 
 import { COLORS } from "styles/constants";
@@ -17,18 +18,24 @@ const AppContainer = styled.div`
 `;
 
 const SidebarContainer = styled.div<{ isOpen: boolean }>`
-  width: ${({ isOpen }) => (isOpen ? "250px" : "100px")};
+  width: ${({ isOpen }) => (isOpen ? "350px" : "50px")};
   transition: 0.2s all ease;
 
   background: lightgray;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 type PrivateContainerProps = {};
 const PrivateContainer: FunctionComponent<PrivateContainerProps> = ({
   children,
 }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const { user, signOut, signInWithGoogle } = useContext(authContext);
 
   return (
     <AppContainer>
@@ -38,7 +45,10 @@ const PrivateContainer: FunctionComponent<PrivateContainerProps> = ({
           setIsSidebarOpen((current) => !current);
         }}
       >
-        Sidebar
+        <div>{user?.email ?? "Not signed in"}</div>
+        <button type="button" onClick={user ? signOut : signInWithGoogle}>
+          {user?.email ? "sign out" : "sign in"}
+        </button>
       </SidebarContainer>
       <main>{children}</main>
     </AppContainer>
