@@ -35,7 +35,7 @@ const getCleanUser = ({
 });
 
 export const AuthProvider: FunctionComponent = ({ children }) => {
-  const [userId, setUserId] = useState<string>();
+  const [userId, setUserId] = useState<string>(null);
   const [user, setUser] = useState<User>(null);
 
   // Creates / Updates the user in Firestore on auth change.
@@ -47,6 +47,9 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
           createUser(newUser.uid, getCleanUser(newUser)).then(() => {
             setUserId(newUser.uid);
           });
+        } else {
+          setUser(null);
+          setUserId(null);
         }
       }),
     [user]

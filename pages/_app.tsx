@@ -1,9 +1,8 @@
 import { PrivateContainer } from "components/PrivateContainer";
 import { PublicContainer } from "components/PublicContainer";
-import { authContext, AuthProvider } from "context/auth/auth.context";
+import { AuthProvider } from "context/auth/auth.context";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
-import { FunctionComponent, useContext } from "react";
 
 import { GlobalStyles } from "styles/global";
 
