@@ -11,10 +11,12 @@ export const COLORS = {
     white: "#FFFFFF",
   },
   ui: {
+    white: "#FFFFFF",
     ui1: "#F5F6F8",
     ui2: "#F5F7FF",
     ui3: "#E2E5EE",
     ui4: "#E2E5EE",
+    ui5: "#7F8EB5",
   },
 };
 

@@ -16,10 +16,11 @@ const AppContainer = styled.div`
   display: flex;
   align-items: stretch;
   height: 100vh;
+  background-color: ${COLORS.ui.ui1};
 
   main {
     padding: 75px 100px;
-    width: 100%;
+    flex: 1;
   }
 `;
 
@@ -35,12 +36,12 @@ const PrivateContainer: FunctionComponent<PrivateContainerProps> = ({
     if (!userId && !loading) replace("/");
   }, [loading, replace, userId]);
 
-  return (
+  return userId ? (
     <AppContainer>
       <Sidebar />
       <main>{children}</main>
     </AppContainer>
-  );
+  ) : null;
 };
 
 export default PrivateContainer;

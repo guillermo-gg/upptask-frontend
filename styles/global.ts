@@ -160,6 +160,7 @@ const resetButton = css`
 
     /* Normalize \`line-height\`. Cannot be changed from \`normal\` in Firefox 4+. */
     line-height: normal;
+    outline: none;
   }
 `;
 
