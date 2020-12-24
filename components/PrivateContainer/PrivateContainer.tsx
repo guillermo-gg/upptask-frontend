@@ -19,7 +19,7 @@ const AppContainer = styled.div`
   background-color: ${COLORS.ui.ui1};
 
   main {
-    padding: 75px 100px;
+    padding: 120px 150px;
     flex: 1;
   }
 `;
@@ -28,7 +28,7 @@ type PrivateContainerProps = {};
 const PrivateContainer: FunctionComponent<PrivateContainerProps> = ({
   children,
 }) => {
-  const { userId, loading } = useContext(authContext);
+  const { user, userId, loading } = useContext(authContext);
 
   const { replace } = useRouter();
 
@@ -36,7 +36,7 @@ const PrivateContainer: FunctionComponent<PrivateContainerProps> = ({
     if (!userId && !loading) replace("/");
   }, [loading, replace, userId]);
 
-  return userId ? (
+  return user ? (
     <AppContainer>
       <Sidebar />
       <main>{children}</main>

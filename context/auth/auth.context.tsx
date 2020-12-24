@@ -1,5 +1,4 @@
 import firebase from "firebase";
-import { userInfo } from "os";
 import React, {
   useState,
   useEffect,

@@ -23,8 +23,12 @@ const Container = styled.div<{ isOpen: boolean }>`
 
 const LogoButton = styled.button`
   margin-bottom: 30px;
-  width: 50px;
+  height: 50px;
   ${flexFullCenterRow};
+
+  img {
+    height: 100%;
+  }
 `;
 
 const BoardListContainer = styled.div`
@@ -106,11 +110,12 @@ const Sidebar: FunctionComponent<SidebarProps> = (props) => {
         <ProfileImage src={user.photoURL} />
         <IconButton
           icon="/assets/settings-light.svg"
-          onClick={() => alert("Settings")}
           isFullWidth
+          localHref="/settings"
         >
           {isSidebarOpen ? "Settings" : null}
         </IconButton>
+
         <IconButton icon="/assets/logout-light.svg" onClick={signOut} hasBorder>
           {isSidebarOpen ? "Log out" : null}
         </IconButton>
