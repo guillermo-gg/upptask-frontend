@@ -1,5 +1,5 @@
 import { createGlobalStyle, css } from "styled-components";
-import { FONT_FAMILY } from "./constants";
+import { COLORS, FONT_FAMILY } from "./constants";
 
 const resetCSS = css`
   /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -166,8 +166,8 @@ const resetButton = css`
 const globalStyles = css`
   html {
     font-family: ${FONT_FAMILY};
-
     font-size: 16px;
+    color: ${COLORS.text.textDark};
   }
 
   button {

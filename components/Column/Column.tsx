@@ -1,12 +1,11 @@
 import { TaskCard } from "components/TaskCard";
 import TaskCardPlaceholder from "components/TaskCard/AddTaskCardPlaceholder";
 import { tasksContext } from "context/tasks/tasks.context";
-import { ColumnT } from "data/types";
 import * as faker from "faker";
 import React, { FunctionComponent, useContext } from "react";
+import { ColumnT } from "services/tasks.service";
 import styled, { css } from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
-import { COLORS } from "styles/constants";
 
 const Container = styled.div`
   width: 300px;
@@ -32,7 +31,6 @@ const ColumnTitle = styled.div`
 
   span {
     border-radius: 15px;
-    background: ${COLORS.illustration.tertiary};
     padding: 2px 10px;
   }
 `;
@@ -50,7 +48,7 @@ const DropArea = styled.ul<{
   ${({ isDragging }) =>
     isDragging
       ? css`
-          border: 1px dashed ${COLORS.background.borderLight};
+          border: 1px dashed lightgray;
         `
       : null}
 `;

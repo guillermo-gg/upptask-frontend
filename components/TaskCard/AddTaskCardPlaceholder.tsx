@@ -9,14 +9,12 @@ const InnerContainer = styled.button`
   height: 100%;
   ${flexFullCenterRow};
 
-  border: 1px solid ${COLORS.background.borderDark};
+  border: 1px solid lightgray;
   border-radius: ${CARD_CONSTANTS.borderRadius};
   ${TRANSITION};
-  color: ${COLORS.background.borderDark};
 
   &:hover {
-    border: 1px solid ${COLORS.elements.buttonText};
-    color: ${COLORS.elements.buttonText};
+    border: 1px solid lightgray;
   }
 `;
 

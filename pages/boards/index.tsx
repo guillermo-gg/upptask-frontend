@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { flexFullCenterColumn } from "styles/mixins";
 
 const Container = styled.div`
-  ${flexFullCenterColumn}
+  ${flexFullCenterColumn};
   height: 100%;
 `;
 

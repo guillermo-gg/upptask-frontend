@@ -25,7 +25,7 @@ const HeaderContainer = styled.div`
   margin-bottom: 75px;
 
   h1 {
-    ${TEXT.title};
+    ${TEXT.header};
   }
 `;
 
