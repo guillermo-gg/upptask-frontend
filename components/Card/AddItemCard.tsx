@@ -1,8 +1,8 @@
-import { TaskCardContainer } from "components/TaskCard/styles";
 import React, { FunctionComponent } from "react";
 import styled, { css } from "styled-components";
 import { COLORS, STANDARD_BORDER_RADIUS, TRANSITION } from "styles/constants";
 import { flexFullCenterRow } from "styles/mixins";
+import { CardContainer } from "./styles";
 
 const InnerContainer = styled.button<{ isDragging: boolean }>`
   width: 100%;
@@ -25,16 +25,16 @@ const InnerContainer = styled.button<{ isDragging: boolean }>`
   }
 `;
 
-type TaskCardPlaceholderProps = {
+type AddItemCardProps = {
   onClickAdd: () => void;
   isDragging?: boolean;
 };
-const TaskCardPlaceholder: FunctionComponent<TaskCardPlaceholderProps> = ({
+const AddItemCard: FunctionComponent<AddItemCardProps> = ({
   onClickAdd,
   isDragging,
 }) => {
   return (
-    <TaskCardContainer
+    <CardContainer
       styles={css`
         margin-bottom: 0;
       `}
@@ -42,8 +42,8 @@ const TaskCardPlaceholder: FunctionComponent<TaskCardPlaceholderProps> = ({
       <InnerContainer onClick={onClickAdd} isDragging={isDragging}>
         + Add
       </InnerContainer>
-    </TaskCardContainer>
+    </CardContainer>
   );
 };
 
-export default TaskCardPlaceholder;
+export default AddItemCard;

@@ -1,4 +1,3 @@
-import { TaskCardContainer } from "components/TaskCard/styles";
 import React, { FunctionComponent } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled, { css } from "styled-components";
@@ -9,6 +8,7 @@ import {
   TEXT,
   TRANSITION,
 } from "styles/constants";
+import { CardContainer, CardSize } from "./styles";
 
 const TaskCardContent = styled.div<{
   isBeingDragged?: boolean;
@@ -45,15 +45,6 @@ const Description = styled.div`
   color: ${COLORS.text.textGray1};
 `;
 
-const DeleteIcon = styled.button`
-  ${TRANSITION};
-  padding: 2px;
-  img {
-    height: 20px;
-    max-width: 20px;
-  }
-`;
-
 type TaskCardProps = {
   id: string;
   index: number;
@@ -66,15 +57,15 @@ const TaskCard: FunctionComponent<TaskCardProps> = ({
   index,
   title,
   description,
-  onClickDelete,
 }) => {
   return (
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot) => (
-        <TaskCardContainer
+        <CardContainer
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          size={CardSize.SMALL}
         >
           <TaskCardContent
             isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}
@@ -82,7 +73,7 @@ const TaskCard: FunctionComponent<TaskCardProps> = ({
             <Title>{title}</Title>
             <Description>{description ?? ""}</Description>
           </TaskCardContent>
-        </TaskCardContainer>
+        </CardContainer>
       )}
     </Draggable>
   );

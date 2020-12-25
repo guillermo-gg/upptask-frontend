@@ -1,5 +1,4 @@
-import { TaskCard } from "components/TaskCard";
-import TaskCardPlaceholder from "components/TaskCard/AddTaskCardPlaceholder";
+import { TaskCard, AddItemCard } from "components/Card";
 import { tasksContext } from "context/tasks/tasks.context";
 import * as faker from "faker";
 import React, { FunctionComponent, useContext } from "react";
@@ -9,7 +8,6 @@ import { Droppable } from "react-beautiful-dnd";
 import { COLORS, TEXT } from "styles/constants";
 
 const Container = styled.div`
-  width: 300px;
   min-height: 200px;
   margin: 10px;
   display: flex;
@@ -96,7 +94,7 @@ const Column: FunctionComponent<ColumnProps> = ({
               />
             ))}
             {droppableProvided.placeholder}
-            <TaskCardPlaceholder
+            <AddItemCard
               isDragging={isDragging}
               onClickAdd={() => addTaskToColumn(faker.company.bsBuzz(), id)}
             />

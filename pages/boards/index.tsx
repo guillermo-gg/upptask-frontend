@@ -1,8 +1,26 @@
 import { PrivateContainer } from "components/PrivateContainer";
 import { HeaderTypes } from "components/PrivateContainer/Header";
 import React, { FunctionComponent } from "react";
-import styled from "styled-components";
-import { flexFullCenterColumn } from "styles/mixins";
+
+type Board = {
+  label: string;
+  id: string;
+};
+
+const boards: Board[] = [
+  {
+    label: "Some board",
+    id: "pt793fiqewhuclij",
+  },
+  {
+    label: "Some other board",
+    id: "pt793fiqef2whuclij",
+  },
+  {
+    label: "A third board",
+    id: "pt793fiqedfwhuclij",
+  },
+];
 
 type BoardsProps = {};
 const Boards: FunctionComponent<BoardsProps> = (props) => {
@@ -14,7 +32,7 @@ const Boards: FunctionComponent<BoardsProps> = (props) => {
         description: "Select a board, or create one",
       }}
     >
-      Actual content
+      {boards.map(({ label, id }) => null)}
     </PrivateContainer.Content>
   );
 };
