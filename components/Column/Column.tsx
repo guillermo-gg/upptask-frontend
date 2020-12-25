@@ -6,30 +6,38 @@ import React, { FunctionComponent, useContext } from "react";
 import { ColumnT } from "services/tasks.service";
 import styled, { css } from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
+import { COLORS, TEXT } from "styles/constants";
 
 const Container = styled.div`
   width: 300px;
   min-height: 200px;
-  padding: 10px;
+  margin: 10px;
   display: flex;
   flex-direction: column;
+
+  &:first-child {
+    margin-left: -10px;
+  }
 `;
 
 const ColumnTitle = styled.div`
   display: flex;
   align-items: center;
-  //justify-content: space-between;
   padding: 10px;
   height: 40px;
 
   h2 {
-    font-size: 1.2rem;
-    font-weight: 500;
+    ${TEXT.labelBig};
+    font-weight: bold;
+
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 15px;
   }
 
   span {
+    opacity: 0.85;
+    color: ${COLORS.text.textGray1};
+    background-color: ${COLORS.brand.accent};
     border-radius: 15px;
     padding: 2px 10px;
   }
@@ -48,7 +56,7 @@ const DropArea = styled.ul<{
   ${({ isDragging }) =>
     isDragging
       ? css`
-          border: 1px dashed lightgray;
+          border: 1px dashed ${COLORS.ui.ui6};
         `
       : null}
 `;
@@ -83,12 +91,13 @@ const Column: FunctionComponent<ColumnProps> = ({
                 id={taskId}
                 index={index}
                 onClickDelete={() => deleteTask(id, index)}
-              >
-                {content}
-              </TaskCard>
+                title={content}
+                description="Some description"
+              />
             ))}
             {droppableProvided.placeholder}
             <TaskCardPlaceholder
+              isDragging={isDragging}
               onClickAdd={() => addTaskToColumn(faker.company.bsBuzz(), id)}
             />
           </DropArea>

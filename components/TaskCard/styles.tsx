@@ -7,7 +7,3 @@ export const TaskCardContainer = styled.li<{
   height: 75px;
   ${({ styles }) => styles};
 `;
-
-export const CARD_CONSTANTS = {
-  borderRadius: "10px",
-};

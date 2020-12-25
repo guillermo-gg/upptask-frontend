@@ -18,6 +18,7 @@ export const COLORS = {
     ui3: "#E2E5EE",
     ui4: "#E2E5EE",
     ui5: "#7F8EB5",
+    ui6: "#ABAFB7",
   },
 };
 
@@ -61,6 +62,11 @@ export const TEXT = {
   `,
   labelSmall: css`
     font-size: 1rem;
+    line-height: 1.6rem;
+    font-weight: 500;
+  `,
+  labelExtraSmall: css`
+    font-size: 0.85rem;
     font-weight: normal;
   `,
   navLink: css`

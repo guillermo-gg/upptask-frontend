@@ -1,25 +1,31 @@
-import { CARD_CONSTANTS, TaskCardContainer } from "components/TaskCard/styles";
+import { TaskCardContainer } from "components/TaskCard/styles";
 import React, { FunctionComponent } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled, { css } from "styled-components";
-import { ELEVATION, TRANSITION } from "styles/constants";
+import {
+  COLORS,
+  ELEVATION,
+  STANDARD_BORDER_RADIUS,
+  TEXT,
+  TRANSITION,
+} from "styles/constants";
 
 const TaskCardContent = styled.div<{
   isBeingDragged?: boolean;
 }>`
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
 
   width: 100%;
   height: 100%;
 
-  border-radius: ${CARD_CONSTANTS.borderRadius};
+  border-radius: ${STANDARD_BORDER_RADIUS};
   background: white;
   ${ELEVATION.low};
 
   transform: scale(1) rotate(0deg);
-  padding: 20px;
+  padding: 15px;
   ${TRANSITION};
 
   ${({ isBeingDragged }) =>
@@ -28,6 +34,15 @@ const TaskCardContent = styled.div<{
       transform: scale(1.1) rotate(2deg);
       ${ELEVATION.focus};
     `};
+`;
+
+const Title = styled.div`
+  ${TEXT.labelSmall};
+`;
+
+const Description = styled.div`
+  ${TEXT.labelExtraSmall};
+  color: ${COLORS.text.textGray1};
 `;
 
 const DeleteIcon = styled.button`
@@ -43,11 +58,14 @@ type TaskCardProps = {
   id: string;
   index: number;
   onClickDelete: () => void;
+  title: string;
+  description?: string;
 };
 const TaskCard: FunctionComponent<TaskCardProps> = ({
   id,
   index,
-  children,
+  title,
+  description,
   onClickDelete,
 }) => {
   return (
@@ -61,10 +79,8 @@ const TaskCard: FunctionComponent<TaskCardProps> = ({
           <TaskCardContent
             isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}
           >
-            <span>{children}</span>
-            <DeleteIcon type="button" onClick={onClickDelete}>
-              <img src="/assets/trash.svg" alt="trash" />
-            </DeleteIcon>
+            <Title>{title}</Title>
+            <Description>{description ?? ""}</Description>
           </TaskCardContent>
         </TaskCardContainer>
       )}
