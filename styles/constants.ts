@@ -7,7 +7,8 @@ export const COLORS = {
   },
   text: {
     textDark: "#00113A",
-    textGray: "#626775",
+    textGray1: "#626775",
+    textGray2: "#3B4B72",
     white: "#FFFFFF",
   },
   ui: {
@@ -43,7 +44,8 @@ export const TEXT = {
   `,
   subheader: css`
     font-size: 2rem;
-    font-weight: 500;
+    line-height: 3rem;
+    font-weight: 600;
   `,
   paragraph: css`
     font-size: 1.1rem;

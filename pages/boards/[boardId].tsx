@@ -1,7 +1,14 @@
 import { Kanban } from "components/Kanban";
+import { PrivateContainer } from "components/PrivateContainer";
+import { HeaderTypes } from "components/PrivateContainer/Header";
 import { authContext } from "context/auth/auth.context";
 import { tasksContext, TasksProvider } from "context/tasks/tasks.context";
-import { FunctionComponent, ReactElement, useContext, useState } from "react";
+import React, {
+  FunctionComponent,
+  ReactElement,
+  useContext,
+  useState,
+} from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 import { Column } from "components/Column";
@@ -33,14 +40,22 @@ const Board: FunctionComponent<BoardProps> = (props) => {
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
-      <Kanban>
-        {columns &&
-          columns.map((column) => (
-            <Column key={column.id} {...column} isDragging={isDragging} />
-          ))}
-      </Kanban>
-    </DragDropContext>
+    <PrivateContainer.Content
+      header={{
+        type: HeaderTypes.BIG,
+        title: "Some board title",
+        description: "Board description",
+      }}
+    >
+      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+        <Kanban>
+          {columns &&
+            columns.map((column) => (
+              <Column key={column.id} {...column} isDragging={isDragging} />
+            ))}
+        </Kanban>
+      </DragDropContext>
+    </PrivateContainer.Content>
   );
 };
 
