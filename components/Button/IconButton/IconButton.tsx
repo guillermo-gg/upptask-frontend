@@ -1,3 +1,4 @@
+import { getButtonWrapper } from "components/Button/helpers";
 import React, { FunctionComponent } from "react";
 import Link from "next/link";
 import styled from "styled-components";
@@ -30,23 +31,6 @@ const Label = styled.span`
   margin-left: 10px;
 `;
 
-const getWrapper = (
-  wrapper: "a" | "button"
-): FunctionComponent<{ localHref?: string; [key: string]: any }> => ({
-  children,
-  localHref,
-  ...otherProps
-}) =>
-  wrapper === "a" ? (
-    <Link href={localHref}>
-      <a {...otherProps}>{children}</a>
-    </Link>
-  ) : (
-    <button type="button" {...otherProps}>
-      {children}
-    </button>
-  );
-
 interface IconButtonProps extends ButtonContainerProps {
   onClick?: () => void;
   localHref?: string;
@@ -60,7 +44,7 @@ const IconButton: FunctionComponent<IconButtonProps> = ({
   icon,
   ...containerProps
 }) => {
-  const Wrapper = getWrapper(onClick ? "button" : "a");
+  const Wrapper = getButtonWrapper(onClick ? "button" : "a");
 
   return (
     <Wrapper onClick={onClick} localHref={localHref}>
