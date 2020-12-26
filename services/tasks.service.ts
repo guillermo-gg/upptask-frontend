@@ -13,6 +13,12 @@ export type ColumnT = {
   tasks: TaskT[];
 };
 
+export type BoardT = {
+  id: string;
+  title: string;
+  description?: string;
+};
+
 const columnsRef = db.collection("columns");
 const usersRef = db.collection("users");
 
@@ -84,4 +90,26 @@ export const updateFirestoreTasks = (
     },
     { merge: true }
   );
+};
+
+export const syncBoards = (setBoards: Dispatch<SetStateAction<BoardT[]>>) => {
+  const dummyBoards: BoardT[] = [
+    {
+      title: "Some board",
+      id: "pt793fiqewhuclij",
+      description: "sdau asdf asdfa",
+    },
+    {
+      title: "Some other board",
+      id: "pt793fiqef2whuclij",
+      description: "sdau asdf asdfa",
+    },
+    {
+      title: "A third board",
+      id: "pt793fiqedfwhuclij",
+      description: "sdau asdf asdfa",
+    },
+  ];
+
+  setBoards(dummyBoards);
 };

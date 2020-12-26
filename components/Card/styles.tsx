@@ -11,6 +11,6 @@ export const CardContainer = styled.li<{
 }>`
   margin-bottom: 20px;
   height: ${({ size }) => (size === CardSize.MEDIUM ? "185px" : "75px")};
-  width: ${({ size }) => (size === CardSize.MEDIUM ? "350px" : "250px")};
+  width: ${({ size }) => (size === CardSize.MEDIUM ? "300px" : "250px")};
   ${({ styles }) => styles};
 `;

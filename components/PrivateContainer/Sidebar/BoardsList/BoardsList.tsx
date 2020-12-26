@@ -1,5 +1,6 @@
 import { getButtonWrapper } from "components/Button";
 import React, { FunctionComponent } from "react";
+import { BoardT } from "services/tasks.service";
 import styled, { css } from "styled-components";
 import { COLORS, STANDARD_BORDER_RADIUS, TEXT } from "styles/constants";
 import { flexFullCenterRow } from "styles/mixins";
@@ -35,10 +36,7 @@ const buttonWrapperStyles = css`
 `;
 
 type BoardsListProps = {
-  boards: {
-    label: string;
-    id: string;
-  }[];
+  boards: BoardT[];
 };
 const BoardsList: FunctionComponent<BoardsListProps> = ({ boards }) => {
   const ButtonWrapper = getButtonWrapper("button", buttonWrapperStyles);
@@ -46,9 +44,9 @@ const BoardsList: FunctionComponent<BoardsListProps> = ({ boards }) => {
   return (
     <>
       <SectionTitle>Your boards</SectionTitle>
-      {boards.map(({ label, id }) => (
+      {boards.map(({ title, id }) => (
         <ButtonWrapper onClick={() => alert("label")}>
-          <BoardButton key={id}>{label}</BoardButton>
+          <BoardButton key={id}>{title}</BoardButton>
         </ButtonWrapper>
       ))}
       <SectionDivider />

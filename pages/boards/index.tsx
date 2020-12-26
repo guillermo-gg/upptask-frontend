@@ -1,29 +1,28 @@
+import BoardCard from "components/Card/BoardCard";
 import { PrivateContainer } from "components/PrivateContainer";
 import { HeaderTypes } from "components/PrivateContainer/Header";
-import React, { FunctionComponent } from "react";
+import { boardContext } from "context/board/board.context";
+import { useRouter } from "next/router";
+import React, { FunctionComponent, useContext } from "react";
+import styled, { css } from "styled-components";
 
-type Board = {
-  label: string;
-  id: string;
-};
+const BoardsGrid = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -25px;
+`;
 
-const boards: Board[] = [
-  {
-    label: "Some board",
-    id: "pt793fiqewhuclij",
-  },
-  {
-    label: "Some other board",
-    id: "pt793fiqef2whuclij",
-  },
-  {
-    label: "A third board",
-    id: "pt793fiqedfwhuclij",
-  },
-];
+const cardStyles = css`
+  margin-right: 25px;
+  margin-bottom: 25px;
+`;
 
 type BoardsProps = {};
-const Boards: FunctionComponent<BoardsProps> = (props) => {
+const Boards: FunctionComponent<BoardsProps> = () => {
+  const router = useRouter();
+
+  const { boards } = useContext(boardContext);
+
   return (
     <PrivateContainer.Content
       header={{
@@ -32,7 +31,17 @@ const Boards: FunctionComponent<BoardsProps> = (props) => {
         description: "Select a board, or create one",
       }}
     >
-      {boards.map(({ label, id }) => null)}
+      <BoardsGrid>
+        {boards.map(({ title, description, id }) => (
+          <BoardCard
+            title={title}
+            description={description}
+            key={id}
+            containerStyles={cardStyles}
+            onClick={() => router.push(`${router.pathname}/${id}`)}
+          />
+        ))}
+      </BoardsGrid>
     </PrivateContainer.Content>
   );
 };

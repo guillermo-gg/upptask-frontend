@@ -17,7 +17,8 @@ const Container = styled.div`
 
 const Title = styled.h1<HeaderOptions>`
   ${({ type }) => (type === HeaderTypes.BIG ? TEXT.header : TEXT.subheader)};
-  margin-bottom: 1rem;
+  margin-bottom: ${({ type }) =>
+    type === HeaderTypes.BIG ? "1rem" : "0.5rem"};
 `;
 
 const Description = styled.div<HeaderOptions>`

@@ -1,6 +1,7 @@
 import { Header, HeaderProps } from "components/PrivateContainer/Header";
 import { Sidebar } from "components/PrivateContainer/Sidebar";
 import { authContext } from "context/auth/auth.context";
+import { BoardProvider } from "context/board/board.context";
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useContext, useEffect } from "react";
 import styled from "styled-components";
@@ -47,8 +48,10 @@ const PrivateContainer: PrivateContainerType = ({ children }) => {
 
   return user ? (
     <AppContainer>
-      <Sidebar />
-      {children}
+      <BoardProvider>
+        <Sidebar />
+        {children}
+      </BoardProvider>
     </AppContainer>
   ) : null;
 };

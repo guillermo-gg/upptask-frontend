@@ -1,4 +1,5 @@
 import { TaskCard, AddItemCard } from "components/Card";
+import { Pill } from "components/Pill";
 import { tasksContext } from "context/tasks/tasks.context";
 import * as faker from "faker";
 import React, { FunctionComponent, useContext } from "react";
@@ -30,14 +31,6 @@ const ColumnTitle = styled.div`
 
     display: inline-block;
     margin-right: 15px;
-  }
-
-  span {
-    opacity: 0.85;
-    color: ${COLORS.text.textGray1};
-    background-color: ${COLORS.brand.accent};
-    border-radius: 15px;
-    padding: 2px 10px;
   }
 `;
 
@@ -74,7 +67,7 @@ const Column: FunctionComponent<ColumnProps> = ({
     <Container>
       <ColumnTitle>
         <h2>{name}</h2>
-        <span>{tasks.length}</span>
+        <Pill>{tasks.length}</Pill>
       </ColumnTitle>
       <Droppable droppableId={id}>
         {(droppableProvided) => (

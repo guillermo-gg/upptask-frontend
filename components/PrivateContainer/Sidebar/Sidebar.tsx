@@ -1,6 +1,7 @@
 import { IconButton } from "components/Button";
 import { BoardsList } from "components/PrivateContainer/Sidebar/BoardsList";
 import { authContext } from "context/auth/auth.context";
+import { boardContext } from "context/board/board.context";
 import React, {
   FunctionComponent,
   useContext,
@@ -66,6 +67,8 @@ const Sidebar: FunctionComponent<SidebarProps> = (props) => {
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isSidebarPinned, setIsSidebarPinned] = useState(false);
 
+  const { boards } = useContext(boardContext);
+
   useEffect(() => {
     setIsSidebarOpen(isMouseOver || isSidebarPinned);
   }, [isMouseOver, isSidebarPinned]);
@@ -87,22 +90,7 @@ const Sidebar: FunctionComponent<SidebarProps> = (props) => {
       <BoardListContainer>
         {isSidebarOpen && (
           <>
-            <BoardsList
-              boards={[
-                {
-                  label: "Some board",
-                  id: "pt793fiqewhuclij",
-                },
-                {
-                  label: "Some other board",
-                  id: "pt793fiqef2whuclij",
-                },
-                {
-                  label: "A third board",
-                  id: "pt793fiqedfwhuclij",
-                },
-              ]}
-            />
+            <BoardsList boards={boards} />
           </>
         )}
       </BoardListContainer>
