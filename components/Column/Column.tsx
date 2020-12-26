@@ -90,6 +90,9 @@ const Column: FunctionComponent<ColumnProps> = ({
             <AddItemCard
               isDragging={isDragging}
               onClickAdd={() => addTaskToColumn(faker.company.bsBuzz(), id)}
+              containerStyles={css`
+                margin-bottom: 0;
+              `}
             />
           </DropArea>
         )}

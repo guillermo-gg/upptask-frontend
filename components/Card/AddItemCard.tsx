@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
-import styled, { css } from "styled-components";
+import styled, { css, FlattenSimpleInterpolation } from "styled-components";
 import { COLORS, STANDARD_BORDER_RADIUS, TRANSITION } from "styles/constants";
 import { flexFullCenterRow } from "styles/mixins";
-import { CardContainer } from "./styles";
+import { CardContainer, CardSize } from "./styles";
 
 const InnerContainer = styled.button<{ isDragging: boolean }>`
   width: 100%;
@@ -28,17 +28,17 @@ const InnerContainer = styled.button<{ isDragging: boolean }>`
 type AddItemCardProps = {
   onClickAdd: () => void;
   isDragging?: boolean;
+  containerStyles?: FlattenSimpleInterpolation;
+  size?: CardSize;
 };
 const AddItemCard: FunctionComponent<AddItemCardProps> = ({
   onClickAdd,
   isDragging,
+  containerStyles,
+  size,
 }) => {
   return (
-    <CardContainer
-      styles={css`
-        margin-bottom: 0;
-      `}
-    >
+    <CardContainer styles={containerStyles} size={size ?? CardSize.SMALL}>
       <InnerContainer onClick={onClickAdd} isDragging={isDragging}>
         + Add
       </InnerContainer>

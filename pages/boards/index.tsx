@@ -1,5 +1,6 @@
 import { AddItemCard } from "components/Card";
 import BoardCard from "components/Card/BoardCard";
+import { CardSize } from "components/Card/styles";
 import { PrivateContainer } from "components/PrivateContainer";
 import { HeaderTypes } from "components/PrivateContainer/Header";
 import { boardContext } from "context/board/board.context";
@@ -42,7 +43,7 @@ const Boards: FunctionComponent<BoardsProps> = () => {
             onClick={() => router.push(`${router.pathname}/${id}`)}
           />
         ))}
-        <AddItemCard onClickAdd={() => createBoard()} />
+        <AddItemCard onClickAdd={() => createBoard()} size={CardSize.MEDIUM} />
       </BoardsGrid>
     </PrivateContainer.Content>
   );
