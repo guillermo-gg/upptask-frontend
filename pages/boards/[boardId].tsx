@@ -3,12 +3,8 @@ import { PrivateContainer } from "components/PrivateContainer";
 import { HeaderTypes } from "components/PrivateContainer/Header";
 import { authContext } from "context/auth/auth.context";
 import { tasksContext, TasksProvider } from "context/tasks/tasks.context";
-import React, {
-  FunctionComponent,
-  ReactElement,
-  useContext,
-  useState,
-} from "react";
+import { useRouter } from "next/router";
+import React, { FunctionComponent, useContext, useMemo, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 import { Column } from "components/Column";
@@ -17,7 +13,7 @@ type BoardProps = {};
 const Board: FunctionComponent<BoardProps> = (props) => {
   const [isDragging, setIsDragging] = useState(false);
 
-  const { columns, moveTask } = useContext(tasksContext);
+  const { columns, moveTask, title, description } = useContext(tasksContext);
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     setIsDragging(false);
@@ -43,8 +39,8 @@ const Board: FunctionComponent<BoardProps> = (props) => {
     <PrivateContainer.Content
       header={{
         type: HeaderTypes.BIG,
-        title: "Some board title",
-        description: "Board description",
+        title,
+        description,
       }}
     >
       <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
@@ -59,11 +55,21 @@ const Board: FunctionComponent<BoardProps> = (props) => {
   );
 };
 
-const BoardWithContext = (): ReactElement => {
+const BoardWithContext: FunctionComponent = () => {
   const { user } = useContext(authContext);
 
-  return user?.uid ? (
-    <TasksProvider userId={user?.uid}>
+  const {
+    query: { boardId: parsedBoardId },
+  } = useRouter();
+
+  const boardId = useMemo(
+    (): string =>
+      Array.isArray(parsedBoardId) ? parsedBoardId[0] : parsedBoardId,
+    [parsedBoardId]
+  );
+
+  return user?.uid && boardId ? (
+    <TasksProvider boardId={boardId}>
       <Board />
     </TasksProvider>
   ) : null;

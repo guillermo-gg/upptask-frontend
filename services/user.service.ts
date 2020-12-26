@@ -34,12 +34,3 @@ export const syncUser = (
     if (!doc.exists) return;
     setUser(doc.data() as User);
   });
-
-export const updateUserColumnsId = async (
-  uid: string,
-  newColumnsId: string
-): Promise<void> => {
-  return usersCollRef
-    .doc(uid)
-    .set({ columnsId: newColumnsId }, { merge: true });
-};

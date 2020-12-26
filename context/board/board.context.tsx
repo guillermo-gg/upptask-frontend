@@ -1,26 +1,21 @@
-import { produce } from "immer";
+import { authContext } from "context/auth/auth.context";
 import {
   createContext,
   Dispatch,
   FunctionComponent,
   SetStateAction,
+  useContext,
   useEffect,
   useState,
 } from "react";
-import { v4 as uuid } from "uuid";
-import {
-  BoardT,
-  ColumnT,
-  syncBoards,
-  syncColumnsId,
-  syncTasks,
-  TaskT,
-  updateFirestoreTasks,
-} from "services/tasks.service";
+import { BoardT, createNewBoardDoc, syncBoards } from "services/board.service";
+
+type CreateBoardCallback = () => Promise<string>;
 
 type BoardContextT = {
   boards: BoardT[];
   setBoards: Dispatch<SetStateAction<BoardT[]>>;
+  createBoard: CreateBoardCallback;
 };
 
 export const boardContext = createContext<BoardContextT | null>(null);
@@ -35,15 +30,26 @@ export const BoardProvider: FunctionComponent<BoardProviderProps> = ({
 }) => {
   const [boards, setBoards] = useState<BoardT[]>([]);
 
+  const { userId } = useContext(authContext);
+
   useEffect(() => {
-    syncBoards(setBoards);
-  }, []);
+    if (userId) syncBoards(userId, setBoards);
+  }, [userId]);
+
+  const createBoard: CreateBoardCallback = () => {
+    return createNewBoardDoc({
+      title: "Some title",
+      description: "eh",
+      userId,
+    });
+  };
 
   return (
     <Provider
       value={{
         boards,
         setBoards,
+        createBoard,
       }}
     >
       {children}

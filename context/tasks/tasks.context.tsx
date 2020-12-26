@@ -10,11 +10,10 @@ import {
 import { v4 as uuid } from "uuid";
 import {
   ColumnT,
-  syncColumnsId,
-  syncTasks,
+  syncBoard,
   TaskT,
-  updateFirestoreTasks,
-} from "services/tasks.service";
+  updateFirestoreBoard,
+} from "services/board.service";
 
 type AddTaskToColumnCallback = (content: string, columnId: string) => void;
 
@@ -31,6 +30,10 @@ type MoveTaskCallback = (
 ) => void;
 
 type TasksContextT = {
+  title: string;
+  description: string;
+  setTitle: Dispatch<SetStateAction<string>>;
+  setDescription: Dispatch<SetStateAction<string>>;
   columns: ColumnT[];
   setColumns: Dispatch<SetStateAction<ColumnT[]>>;
   addTaskToColumn: AddTaskToColumnCallback;
@@ -45,31 +48,36 @@ const { Provider } = tasksContext;
 // Using Immer:
 /* eslint-disable no-param-reassign */
 type TaskProviderProps = {
-  userId?: string;
+  boardId: string;
 };
 export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
   children,
-  userId,
+  boardId,
 }) => {
   const [columns, setColumns] = useState<ColumnT[]>(null);
-  const [columnsId, setColumnsId] = useState<string>();
-
-  // Get columns id and sync to state. Will create an empty document with
-  // the columns if none is found.
-  useEffect(() => {
-    syncColumnsId(userId, setColumnsId);
-  }, [userId]);
+  const [title, setTitle] = useState<string>();
+  const [description, setDescription] = useState<string>();
 
   // Fetch tasks:
   useEffect(() => {
-    if (columnsId) syncTasks(columnsId, setColumns);
-  }, [columnsId]);
+    if (boardId) syncBoard({ boardId, setColumns, setTitle, setDescription });
+  }, [boardId]);
 
   // Update Firestore:
   useEffect(() => {
     if (!columns) return;
-    updateFirestoreTasks(columnsId, columns);
-  }, [columns, columnsId]);
+    updateFirestoreBoard(boardId, { columns });
+  }, [columns, boardId]);
+
+  useEffect(() => {
+    if (!title) return;
+    updateFirestoreBoard(boardId, { title });
+  }, [title, boardId]);
+
+  useEffect(() => {
+    if (!description) return;
+    updateFirestoreBoard(boardId, { description });
+  }, [description, boardId]);
 
   const addTaskToColumn: AddTaskToColumnCallback = (
     content: string, // TaskContent
@@ -137,6 +145,10 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
   return (
     <Provider
       value={{
+        title,
+        description,
+        setTitle,
+        setDescription,
         columns,
         setColumns,
         addTaskToColumn,

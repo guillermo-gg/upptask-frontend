@@ -1,3 +1,4 @@
+import { AddItemCard } from "components/Card";
 import BoardCard from "components/Card/BoardCard";
 import { PrivateContainer } from "components/PrivateContainer";
 import { HeaderTypes } from "components/PrivateContainer/Header";
@@ -21,7 +22,7 @@ type BoardsProps = {};
 const Boards: FunctionComponent<BoardsProps> = () => {
   const router = useRouter();
 
-  const { boards } = useContext(boardContext);
+  const { boards, createBoard } = useContext(boardContext);
 
   return (
     <PrivateContainer.Content
@@ -41,6 +42,7 @@ const Boards: FunctionComponent<BoardsProps> = () => {
             onClick={() => router.push(`${router.pathname}/${id}`)}
           />
         ))}
+        <AddItemCard onClickAdd={() => createBoard()} />
       </BoardsGrid>
     </PrivateContainer.Content>
   );

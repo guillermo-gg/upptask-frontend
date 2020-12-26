@@ -3,7 +3,7 @@ import { Pill } from "components/Pill";
 import { tasksContext } from "context/tasks/tasks.context";
 import * as faker from "faker";
 import React, { FunctionComponent, useContext } from "react";
-import { ColumnT } from "services/tasks.service";
+import { ColumnT } from "services/board.service";
 import styled, { css } from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
 import { COLORS, TEXT } from "styles/constants";
