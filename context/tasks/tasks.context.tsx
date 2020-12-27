@@ -17,6 +17,11 @@ import {
 
 type UpdateBoardLastUsedCallback = () => Promise<void>;
 
+export type UpdateBoardDetailsCallback = (params: {
+  title: string;
+  description: string;
+}) => Promise<void>;
+
 type AddTaskToColumnCallback = (content: string, columnId: string) => void;
 
 // Returns deleted task.
@@ -42,6 +47,7 @@ type TasksContextT = {
   deleteTask: DeleteTaskCallback;
   moveTask: MoveTaskCallback;
   updateBoardLastUsed: UpdateBoardLastUsedCallback;
+  updateBoardDetails: UpdateBoardDetailsCallback;
 };
 
 export const tasksContext = createContext<TasksContextT | null>(null);
@@ -84,6 +90,16 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
 
   const updateBoardLastUsed: UpdateBoardLastUsedCallback = () => {
     return updateFirestoreBoard(boardId, { lastUsed: Date.now() });
+  };
+
+  const updateBoardDetails: UpdateBoardDetailsCallback = ({
+    title: newTitle,
+    description: newDescription,
+  }) => {
+    return updateFirestoreBoard(boardId, {
+      title: newTitle,
+      description: newDescription,
+    });
   };
 
   const addTaskToColumn: AddTaskToColumnCallback = (
@@ -162,6 +178,7 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
         deleteTask,
         moveTask,
         updateBoardLastUsed,
+        updateBoardDetails,
       }}
     >
       {children}

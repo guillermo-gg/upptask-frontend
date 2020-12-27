@@ -75,8 +75,8 @@ const Header: FunctionComponent<HeaderProps> = ({
     <Container>
       <div>
         <Title type={type}>{title}</Title>
-        <Description type={type} isPlaceholder={!description.length}>
-          {description.length ? description : "This board has no description"}
+        <Description type={type} isPlaceholder={!description?.length}>
+          {description?.length ? description : "This board has no description"}
         </Description>
       </div>
       {buttons && (

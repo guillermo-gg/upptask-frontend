@@ -22,13 +22,13 @@ const StyledButton = styled.button<{ styles?: FlattenSimpleInterpolation }>`
 export const getButtonWrapper = (
   wrapper: "a" | "button",
   wrapperStyles?: FlattenSimpleInterpolation
-): FunctionComponent<WrapperProps> => ({ children, localHref }) => {
+): FunctionComponent<WrapperProps> => ({ children, localHref, onClick }) => {
   return wrapper === "a" ? (
     <Link href={localHref}>
       <StyledAnchor styles={wrapperStyles}>{children}</StyledAnchor>
     </Link>
   ) : (
-    <StyledButton type="button" styles={wrapperStyles}>
+    <StyledButton type="button" styles={wrapperStyles} onClick={onClick}>
       {children}
     </StyledButton>
   );

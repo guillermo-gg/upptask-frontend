@@ -1,6 +1,6 @@
 import { IconButton } from "components/Button";
 import { Kanban } from "components/Kanban";
-import { Modal } from "components/Modal";
+import { BoardOptionsModal, Modal } from "components/Modal";
 import { PrivateContainer } from "components/PrivateContainer";
 import { HeaderTypes } from "components/PrivateContainer/Header";
 import { authContext } from "context/auth/auth.context";
@@ -23,6 +23,7 @@ const Board: FunctionComponent<BoardProps> = (props) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const [isLastUsedUpdated, setIsLastUsedUpdated] = useState(false);
+  const [isEditBoardModalVisible, setIsEditBoardModalVisible] = useState(false);
 
   const {
     columns,
@@ -30,6 +31,7 @@ const Board: FunctionComponent<BoardProps> = (props) => {
     title,
     description,
     updateBoardLastUsed,
+    updateBoardDetails,
   } = useContext(tasksContext);
 
   useEffect(() => {
@@ -73,8 +75,9 @@ const Board: FunctionComponent<BoardProps> = (props) => {
                 <IconButton
                   hasBorder
                   icon="/assets/edit-icon-gray.svg"
-                  /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-                  onClick={() => {}}
+                  onClick={() => {
+                    setIsEditBoardModalVisible(true);
+                  }}
                   color={COLORS.text.textGray1}
                 >
                   Edit
@@ -107,6 +110,12 @@ const Board: FunctionComponent<BoardProps> = (props) => {
           </Kanban>
         </DragDropContext>
       </PrivateContainer.Content>
+      <BoardOptionsModal
+        onClose={() => setIsEditBoardModalVisible(false)}
+        isVisible={isEditBoardModalVisible}
+        initialValues={{ title, description }}
+        updateBoardDetails={updateBoardDetails}
+      />
     </>
   );
 };
