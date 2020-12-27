@@ -97,6 +97,12 @@ export const updateFirestoreBoard = (
   return boardsRef.doc(boardId).set(updatedData, { merge: true });
 };
 
+export const deleteFirestoreBoard = (boardId: string | null) => {
+  if (!boardId) return;
+
+  return boardsRef.doc(boardId).delete();
+};
+
 export const syncBoards = async (
   userId: string,
   setBoards: Dispatch<SetStateAction<BoardT[]>>

@@ -22,6 +22,8 @@ type BoardProps = {};
 const Board: FunctionComponent<BoardProps> = (props) => {
   const [isDragging, setIsDragging] = useState(false);
 
+  const router = useRouter();
+
   const [isLastUsedUpdated, setIsLastUsedUpdated] = useState(false);
   const [isEditBoardModalVisible, setIsEditBoardModalVisible] = useState(false);
 
@@ -32,6 +34,7 @@ const Board: FunctionComponent<BoardProps> = (props) => {
     description,
     updateBoardLastUsed,
     updateBoardDetails,
+    deleteBoard,
   } = useContext(tasksContext);
 
   useEffect(() => {
@@ -90,8 +93,11 @@ const Board: FunctionComponent<BoardProps> = (props) => {
                 <IconButton
                   hasBorder
                   icon="/assets/trash.svg"
-                  /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-                  onClick={() => {}}
+                  onClick={() => {
+                    deleteBoard().then(() => {
+                      router.push("/boards");
+                    });
+                  }}
                   color={COLORS.ui.red1}
                 >
                   Delete

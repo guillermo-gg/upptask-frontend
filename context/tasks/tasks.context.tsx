@@ -10,12 +10,14 @@ import {
 import { v4 as uuid } from "uuid";
 import {
   ColumnT,
+  deleteFirestoreBoard,
   syncBoard,
   TaskT,
   updateFirestoreBoard,
 } from "services/board.service";
 
 type UpdateBoardLastUsedCallback = () => Promise<void>;
+type DeleteBoardCallback = () => Promise<void>;
 
 export type UpdateBoardDetailsCallback = (params: {
   title: string;
@@ -48,6 +50,7 @@ type TasksContextT = {
   moveTask: MoveTaskCallback;
   updateBoardLastUsed: UpdateBoardLastUsedCallback;
   updateBoardDetails: UpdateBoardDetailsCallback;
+  deleteBoard: DeleteBoardCallback;
 };
 
 export const tasksContext = createContext<TasksContextT | null>(null);
@@ -100,6 +103,10 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
       title: newTitle,
       description: newDescription,
     });
+  };
+
+  const deleteBoard: DeleteBoardCallback = () => {
+    return deleteFirestoreBoard(boardId);
   };
 
   const addTaskToColumn: AddTaskToColumnCallback = (
@@ -179,6 +186,7 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
         moveTask,
         updateBoardLastUsed,
         updateBoardDetails,
+        deleteBoard,
       }}
     >
       {children}
