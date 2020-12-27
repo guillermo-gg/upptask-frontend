@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
-import { COLORS } from "styles/constants";
+import { COLORS, TEXT } from "styles/constants";
 
 const PillContainer = styled.span`
   opacity: 0.85;
+  ${TEXT.labelExtraSmall};
   color: ${COLORS.text.textGray1};
   background-color: ${COLORS.brand.accent};
   border-radius: 15px;

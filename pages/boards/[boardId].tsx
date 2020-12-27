@@ -4,7 +4,13 @@ import { HeaderTypes } from "components/PrivateContainer/Header";
 import { authContext } from "context/auth/auth.context";
 import { tasksContext, TasksProvider } from "context/tasks/tasks.context";
 import { useRouter } from "next/router";
-import React, { FunctionComponent, useContext, useMemo, useState } from "react";
+import React, {
+  FunctionComponent,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 import { Column } from "components/Column";
@@ -13,7 +19,17 @@ type BoardProps = {};
 const Board: FunctionComponent<BoardProps> = (props) => {
   const [isDragging, setIsDragging] = useState(false);
 
-  const { columns, moveTask, title, description } = useContext(tasksContext);
+  const {
+    columns,
+    moveTask,
+    title,
+    description,
+    updateBoardLastUsed,
+  } = useContext(tasksContext);
+
+  useEffect(() => {
+    updateBoardLastUsed();
+  }, [updateBoardLastUsed]);
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     setIsDragging(false);

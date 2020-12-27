@@ -16,6 +16,7 @@ export type BoardT = {
   id: string;
   userId: string;
   title: string;
+  lastUsed: number; // Date.now()
   description?: string;
   columns: ColumnT[];
 };
@@ -55,6 +56,7 @@ export const createNewBoardDoc = async ({
       title,
       description: description ?? "",
       userId,
+      lastUsed: Date.now(),
       columns: emptyColumns,
     })
   ).id;
@@ -86,6 +88,7 @@ export const updateFirestoreBoard = (
   updatedData: {
     columns?: ColumnT[];
     title?: string;
+    lastUsed?: number;
     description?: string;
   }
 ) => {
@@ -101,15 +104,18 @@ export const syncBoards = async (
   boardsRef.where("userId", "==", userId).onSnapshot((snapshot) => {
     const retrievedBoards: BoardT[] = [];
     snapshot.forEach((doc) => {
-      const { title, description, columns } = doc.data();
+      const { title, description, columns, lastUsed } = doc.data();
       retrievedBoards.push({
         title,
         description,
         columns,
         userId,
+        lastUsed,
         id: doc.id,
       });
     });
-    setBoards(retrievedBoards);
+    setBoards(
+      retrievedBoards.sort((a, b) => (b.lastUsed ?? 0) - (a.lastUsed ?? 0))
+    );
   });
 };

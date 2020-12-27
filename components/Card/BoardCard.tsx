@@ -9,6 +9,7 @@ import {
   TEXT,
   TRANSITION,
 } from "styles/constants";
+import { flexCenterRow } from "styles/mixins";
 import { CardContainer, CardSize } from "./styles";
 
 const TaskCardContent = styled.button<{
@@ -46,15 +47,28 @@ const Description = styled.div`
   color: ${COLORS.text.textGray1};
 `;
 
+const BottomContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+`;
+const LastUsed = styled.span`
+  ${TEXT.labelExtraSmall};
+  color: ${COLORS.text.textGray1};
+`;
+
 type BoardCardProps = {
   title: string;
   description?: string;
+  lastUsed?: number;
   onClick: () => void;
   containerStyles?: FlattenSimpleInterpolation;
 };
 const BoardCard: FunctionComponent<BoardCardProps> = ({
   title,
   description,
+  lastUsed,
   onClick,
   containerStyles,
 }) => {
@@ -65,7 +79,10 @@ const BoardCard: FunctionComponent<BoardCardProps> = ({
           <Title>{title}</Title>
           <Description>{description ?? ""}</Description>
         </div>
-        <Pill>34</Pill>
+        <BottomContainer>
+          <Pill>34</Pill>
+          <LastUsed>{lastUsed}</LastUsed>
+        </BottomContainer>
       </TaskCardContent>
     </CardContainer>
   );

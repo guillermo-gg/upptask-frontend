@@ -17,5 +17,6 @@ module.exports = {
     "react/require-default-props": "off",
     "consistent-return": "off",
     "@typescript-eslint/ban-types": "warn",
+    "no-param-reassign": "off",
   },
 };

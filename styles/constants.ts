@@ -9,16 +9,18 @@ export const COLORS = {
     textDark: "#00113A",
     textGray1: "#626775",
     textGray2: "#3B4B72",
+    textGray3: "#9b9da2",
     white: "#FFFFFF",
   },
   ui: {
     white: "#FFFFFF",
-    ui1: "#F5F6F8",
+    ui1: "#f5f6f8",
     ui2: "#F5F7FF",
-    ui3: "#E2E5EE",
-    ui4: "#E2E5EE",
+    ui3: "#e2e5ee",
+    ui4: "#e2e5ee",
     ui5: "#7F8EB5",
     ui6: "#ABAFB7",
+    ui7: "#e7e7e7",
   },
 };
 

@@ -19,6 +19,7 @@ const AppContainer = styled.div`
 const ContentContainer = styled.div`
   padding: 120px 150px;
   flex: 1;
+  overflow: scroll;
 `;
 
 type ContentProps = {

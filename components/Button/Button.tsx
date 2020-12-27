@@ -5,23 +5,36 @@ import {
   ELEVATION,
   STANDARD_BORDER_RADIUS,
   TEXT,
+  TRANSITION,
 } from "styles/constants";
 import { flexFullCenterRow } from "styles/mixins";
 
 type ContainerProps = {
   isFilled?: boolean;
+  isDisabled?: boolean;
   isBig?: boolean;
   fullWidth?: boolean;
 };
 const ButtonContainer = styled.button<ContainerProps>`
   ${(props) =>
+    // eslint-disable-next-line no-nested-ternary
     props.isFilled
-      ? css`
-          background-color: ${COLORS.brand.primary};
-          ${ELEVATION.button};
-          color: ${COLORS.text.white};
-        `
-      : ""}
+      ? !props.isDisabled
+        ? // Filled and not disabled?
+          css`
+            background-color: ${COLORS.brand.primary};
+            ${ELEVATION.button};
+            color: ${COLORS.text.white};
+          `
+        : // Filled and  disabled?
+          css`
+            background-color: ${COLORS.ui.ui7};
+            color: ${COLORS.text.textGray3};
+          `
+      : // Not and  disabled?
+        css`
+          color: ${COLORS.text.textGray2};
+        `}
 
   ${(props) =>
     props.isBig
@@ -39,6 +52,8 @@ const ButtonContainer = styled.button<ContainerProps>`
 
   width: ${(props) => (props.fullWidth ? "100%" : "auto")};
   border-radius: ${STANDARD_BORDER_RADIUS};
+
+  ${TRANSITION};
 `;
 
 interface ButtonProps extends ContainerProps {
@@ -51,7 +66,12 @@ const Button: FunctionComponent<ButtonProps> = ({
   ...containerProps
 }) => {
   return (
-    <ButtonContainer {...containerProps} type="button" onClick={onClick}>
+    <ButtonContainer
+      {...containerProps}
+      type="button"
+      onClick={onClick}
+      disabled={containerProps.isDisabled}
+    >
       {children}
     </ButtonContainer>
   );

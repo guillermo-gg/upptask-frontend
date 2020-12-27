@@ -10,7 +10,10 @@ import {
 } from "react";
 import { BoardT, createNewBoardDoc, syncBoards } from "services/board.service";
 
-type CreateBoardCallback = () => Promise<string>;
+type CreateBoardCallback = (params: {
+  title: string;
+  description?: string;
+}) => Promise<string>;
 
 type BoardContextT = {
   boards: BoardT[];
@@ -36,10 +39,10 @@ export const BoardProvider: FunctionComponent<BoardProviderProps> = ({
     if (userId) syncBoards(userId, setBoards);
   }, [userId]);
 
-  const createBoard: CreateBoardCallback = () => {
+  const createBoard: CreateBoardCallback = ({ title, description }) => {
     return createNewBoardDoc({
-      title: "Some title",
-      description: "eh",
+      title,
+      description,
       userId,
     });
   };
