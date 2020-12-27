@@ -1,4 +1,6 @@
+import { IconButton } from "components/Button";
 import { Kanban } from "components/Kanban";
+import { Modal } from "components/Modal";
 import { PrivateContainer } from "components/PrivateContainer";
 import { HeaderTypes } from "components/PrivateContainer/Header";
 import { authContext } from "context/auth/auth.context";
@@ -14,6 +16,7 @@ import React, {
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 import { Column } from "components/Column";
+import { COLORS } from "styles/constants";
 
 type BoardProps = {};
 const Board: FunctionComponent<BoardProps> = (props) => {
@@ -57,22 +60,54 @@ const Board: FunctionComponent<BoardProps> = (props) => {
   };
 
   return (
-    <PrivateContainer.Content
-      header={{
-        type: HeaderTypes.BIG,
-        title,
-        description,
-      }}
-    >
-      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
-        <Kanban>
-          {columns &&
-            columns.map((column) => (
-              <Column key={column.id} {...column} isDragging={isDragging} />
-            ))}
-        </Kanban>
-      </DragDropContext>
-    </PrivateContainer.Content>
+    <>
+      <PrivateContainer.Content
+        header={{
+          type: HeaderTypes.BIG,
+          title,
+          description,
+          buttons: [
+            {
+              id: "edit-button",
+              component: (
+                <IconButton
+                  hasBorder
+                  icon="/assets/edit-icon-gray.svg"
+                  /* eslint-disable-next-line @typescript-eslint/no-empty-function */
+                  onClick={() => {}}
+                  color={COLORS.text.textGray1}
+                >
+                  Edit
+                </IconButton>
+              ),
+            },
+            {
+              id: "delete-button",
+              component: (
+                <IconButton
+                  hasBorder
+                  icon="/assets/trash.svg"
+                  /* eslint-disable-next-line @typescript-eslint/no-empty-function */
+                  onClick={() => {}}
+                  color={COLORS.ui.red1}
+                >
+                  Delete
+                </IconButton>
+              ),
+            },
+          ],
+        }}
+      >
+        <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+          <Kanban>
+            {columns &&
+              columns.map((column) => (
+                <Column key={column.id} {...column} isDragging={isDragging} />
+              ))}
+          </Kanban>
+        </DragDropContext>
+      </PrivateContainer.Content>
+    </>
   );
 };
 

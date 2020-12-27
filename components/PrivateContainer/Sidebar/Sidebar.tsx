@@ -100,11 +100,17 @@ const Sidebar: FunctionComponent<SidebarProps> = (props) => {
           icon="/assets/settings-light.svg"
           isFullWidth
           localHref="/settings"
+          color={COLORS.ui.white}
         >
           {isSidebarOpen ? "Settings" : null}
         </IconButton>
 
-        <IconButton icon="/assets/logout-light.svg" onClick={signOut} hasBorder>
+        <IconButton
+          icon="/assets/logout-light.svg"
+          onClick={signOut}
+          hasBorder
+          color={COLORS.ui.white}
+        >
           {isSidebarOpen ? "Log out" : null}
         </IconButton>
       </AuthInfoContainer>

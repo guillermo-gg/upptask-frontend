@@ -21,6 +21,7 @@ export const COLORS = {
     ui5: "#7F8EB5",
     ui6: "#ABAFB7",
     ui7: "#e7e7e7",
+    red1: "#FF6E6C",
   },
 };
 

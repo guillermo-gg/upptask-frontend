@@ -9,12 +9,13 @@ import { flexFullCenterRow } from "styles/mixins";
 type ButtonContainerProps = {
   hasBorder?: boolean;
   isFullWidth?: boolean;
+  color?: string;
 };
 
 const Container = styled.div<ButtonContainerProps>`
-  color: ${COLORS.text.white};
+  color: ${({ color }) => color};
   border: 1px solid
-    ${({ hasBorder }) => (hasBorder ? COLORS.ui.white : TRANSPARENT)};
+    ${({ hasBorder, color }) => (hasBorder ? color : TRANSPARENT)};
   border-radius: ${STANDARD_BORDER_RADIUS};
   padding: 6px 20px;
   width: ${({ isFullWidth }) => (isFullWidth ? "100%" : "auto")};
