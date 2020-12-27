@@ -82,8 +82,9 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
     updateFirestoreBoard(boardId, { description });
   }, [description, boardId]);
 
-  const updateBoardLastUsed: UpdateBoardLastUsedCallback = () =>
-    updateFirestoreBoard(boardId, { lastUsed: Date.now() });
+  const updateBoardLastUsed: UpdateBoardLastUsedCallback = () => {
+    return updateFirestoreBoard(boardId, { lastUsed: Date.now() });
+  };
 
   const addTaskToColumn: AddTaskToColumnCallback = (
     content: string, // TaskContent

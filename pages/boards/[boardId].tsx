@@ -19,6 +19,8 @@ type BoardProps = {};
 const Board: FunctionComponent<BoardProps> = (props) => {
   const [isDragging, setIsDragging] = useState(false);
 
+  const [isLastUsedUpdated, setIsLastUsedUpdated] = useState(false);
+
   const {
     columns,
     moveTask,
@@ -28,8 +30,11 @@ const Board: FunctionComponent<BoardProps> = (props) => {
   } = useContext(tasksContext);
 
   useEffect(() => {
-    updateBoardLastUsed();
-  }, [updateBoardLastUsed]);
+    setIsLastUsedUpdated((current) => {
+      if (!current) updateBoardLastUsed();
+      return true;
+    });
+  }, [isLastUsedUpdated, updateBoardLastUsed]);
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     setIsDragging(false);
