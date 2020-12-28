@@ -5,6 +5,7 @@ import React, {
   createContext,
   FunctionComponent,
 } from "react";
+import { deleteUserData } from "services/board.service";
 import { AuthUser, createUser, syncUser, User } from "services/user.service";
 
 import { auth } from "services/firebase.service";
@@ -15,6 +16,7 @@ type AuthContext = {
   loading: boolean;
   signInWithGoogle: () => Promise<firebase.auth.UserCredential>;
   signOut: () => Promise<void>;
+  deleteUser: () => Promise<void>;
 };
 
 export const authContext = createContext<AuthContext | null>(null);
@@ -74,6 +76,16 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     setUserId(null);
   };
 
+  // Technically doesn't delete the user, only the user data. We still keep
+  // the auth object.
+  const deleteUser = async () => {
+    deleteUserData(userId);
+    setUser(null);
+    setUserId(null);
+    setLoading(true);
+    signOut();
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -82,6 +94,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
         loading,
         signInWithGoogle,
         signOut,
+        deleteUser,
       }}
     >
       {children}

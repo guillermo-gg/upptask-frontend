@@ -104,6 +104,14 @@ export const deleteFirestoreBoard = (boardId: string | null) => {
   return boardsRef.doc(boardId).delete();
 };
 
+export const deleteUserData = async (userId: string) => {
+  const boards = await boardsRef.where("userId", "==", userId).get();
+
+  boards.forEach((board) => {
+    board.ref.delete();
+  });
+};
+
 export const syncBoards = async (
   userId: string,
   setBoards: Dispatch<SetStateAction<BoardT[]>>

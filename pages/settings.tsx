@@ -43,7 +43,7 @@ const DisclaimerText = styled.p`
 
 type SettingsProps = {};
 const Settings: FunctionComponent<SettingsProps> = (props) => {
-  const { user } = useContext(authContext);
+  const { user, deleteUser } = useContext(authContext);
 
   return (
     <PrivateContainer.Content
@@ -64,7 +64,7 @@ const Settings: FunctionComponent<SettingsProps> = (props) => {
               <TextInput value={user?.email} label="Email" />
             </InfoFieldContainer>
             <ButtonContainer>
-              <Button isFilled fullWidth onClick={() => alert("Handle delete")}>
+              <Button isFilled fullWidth onClick={deleteUser}>
                 Delete account
               </Button>
             </ButtonContainer>
