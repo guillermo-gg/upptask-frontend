@@ -24,7 +24,22 @@ export type UpdateBoardDetailsCallback = (params: {
   description: string;
 }) => Promise<void>;
 
-type AddTaskToColumnCallback = (content: string, columnId: string) => void;
+type AddTaskToColumnCallback = (
+  content: {
+    title: string;
+    description?: string;
+  },
+  columnId: string
+) => void;
+
+type UpdateTaskDetailsCallback = (
+  content: {
+    title: string;
+    description?: string;
+  },
+  taskId: string,
+  columnId: string
+) => void;
 
 // Returns deleted task.
 type DeleteTaskCallback = (
@@ -46,6 +61,7 @@ type TasksContextT = {
   columns: ColumnT[];
   setColumns: Dispatch<SetStateAction<ColumnT[]>>;
   addTaskToColumn: AddTaskToColumnCallback;
+  updateTaskDetails: UpdateTaskDetailsCallback;
   deleteTask: DeleteTaskCallback;
   moveTask: MoveTaskCallback;
   updateBoardLastUsed: UpdateBoardLastUsedCallback;
@@ -110,18 +126,37 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
   };
 
   const addTaskToColumn: AddTaskToColumnCallback = (
-    content: string, // TaskContent
-    columnId: string
+    { title: taskTitle, description: taskDescription },
+    columnId
   ) => {
     const newTask = {
       id: uuid(),
-      content,
+      title: taskTitle,
+      description: taskDescription ?? "",
     };
 
     setColumns((currentColumns) => {
       // Append to the tasks of the target column.
       return produce(currentColumns, (draft) => {
         draft[draft.findIndex(({ id }) => id === columnId)].tasks.push(newTask);
+      });
+    });
+  };
+
+  const updateTaskDetails: UpdateTaskDetailsCallback = (
+    { title: newTitle, description: newDescription },
+    taskId,
+    columnId
+  ) => {
+    setColumns((currentColumns) => {
+      // Append to the tasks of the target column.
+      return produce(currentColumns, (draft) => {
+        const columnIndex = draft.findIndex(({ id }) => id === columnId);
+        const taskIndex = draft[columnIndex].tasks.findIndex(
+          ({ id }) => id === taskId
+        );
+        draft[columnIndex].tasks[taskIndex].title = newTitle;
+        draft[columnIndex].tasks[taskIndex].description = newDescription;
       });
     });
   };
@@ -182,6 +217,7 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
         columns,
         setColumns,
         addTaskToColumn,
+        updateTaskDetails,
         deleteTask,
         moveTask,
         updateBoardLastUsed,

@@ -3,7 +3,8 @@ import { db } from "./firebase.service";
 
 export type TaskT = {
   id: string;
-  content: string;
+  title: string;
+  description: string;
 };
 
 export type ColumnT = {
