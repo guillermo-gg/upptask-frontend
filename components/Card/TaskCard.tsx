@@ -1,4 +1,5 @@
-import React, { FunctionComponent } from "react";
+import { IconButton } from "components/Button";
+import React, { FunctionComponent, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled, { css } from "styled-components";
 import {
@@ -14,7 +15,6 @@ const TaskCardContent = styled.div<{
   isBeingDragged?: boolean;
 }>`
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
 
   width: 100%;
@@ -36,6 +36,41 @@ const TaskCardContent = styled.div<{
     `};
 `;
 
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+`;
+
+const ButtonsContainer = styled.div<{ isVisible?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+
+  &,
+  * {
+    ${TRANSITION};
+  }
+
+  button {
+    height: 17px;
+    width: 17px;
+
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+  img {
+    height: 100%;
+    width: auto;
+  }
+`;
+
 const Title = styled.div`
   ${TEXT.labelSmall};
 `;
@@ -49,6 +84,7 @@ type TaskCardProps = {
   id: string;
   index: number;
   onClickDelete: () => void;
+  onClickEdit: () => void;
   title: string;
   description?: string;
 };
@@ -57,7 +93,11 @@ const TaskCard: FunctionComponent<TaskCardProps> = ({
   index,
   title,
   description,
+  onClickDelete,
+  onClickEdit,
 }) => {
+  const [isMouseOver, setIsMouseOver] = useState(false);
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot) => (
@@ -66,12 +106,24 @@ const TaskCard: FunctionComponent<TaskCardProps> = ({
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           size={CardSize.SMALL}
+          onMouseEnter={() => setIsMouseOver(true)}
+          onMouseLeave={() => setIsMouseOver(false)}
         >
           <TaskCardContent
             isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}
           >
-            <Title>{title}</Title>
-            <Description>{description ?? ""}</Description>
+            <InfoContainer>
+              <Title>{title}</Title>
+              <Description>{description ?? ""}</Description>
+            </InfoContainer>
+            <ButtonsContainer isVisible={isMouseOver}>
+              <button type="button" onClick={onClickEdit}>
+                <img src="/assets/edit-icon-gray.svg" alt="Edit task icon" />
+              </button>
+              <button type="button" onClick={onClickDelete}>
+                <img src="/assets/trash.svg" alt="Delete tasks icon" />
+              </button>
+            </ButtonsContainer>
           </TaskCardContent>
         </CardContainer>
       )}

@@ -2,7 +2,6 @@ import { TaskCard, AddItemCard } from "components/Card";
 import { TaskOptionsModal } from "components/Modal";
 import { Pill } from "components/Pill";
 import { tasksContext } from "context/tasks/tasks.context";
-import * as faker from "faker";
 import React, { FunctionComponent, useContext, useState } from "react";
 import { ColumnT } from "services/board.service";
 import styled, { css } from "styled-components";
@@ -106,6 +105,16 @@ const Column: FunctionComponent<ColumnProps> = ({
                     id={taskId}
                     index={index}
                     onClickDelete={() => deleteTask(id, index)}
+                    onClickEdit={() =>
+                      setEditTaskModalStatus({
+                        isVisible: true,
+                        initialValues: {
+                          id: taskId,
+                          title: taskTitle,
+                          description: taskDescription,
+                        },
+                      })
+                    }
                     title={taskTitle}
                     description={taskDescription}
                   />
