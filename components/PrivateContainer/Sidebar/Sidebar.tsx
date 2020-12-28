@@ -1,5 +1,6 @@
 import { IconButton } from "components/Button";
 import { BoardsList } from "components/PrivateContainer/Sidebar/BoardsList";
+import { ProfilePicture } from "components/ProfilePicture";
 import { authContext } from "context/auth/auth.context";
 import { boardContext } from "context/board/board.context";
 import React, {
@@ -52,16 +53,9 @@ const AuthInfoContainer = styled.div`
   }
 `;
 
-const ProfileImage = styled.img`
-  width: 65px;
-  height: auto;
-  border-radius: 50%;
-  border: 2px solid ${COLORS.ui.ui1};
-`;
-
 type SidebarProps = {};
 const Sidebar: FunctionComponent<SidebarProps> = (props) => {
-  const { user, signOut, signInWithGoogle } = useContext(authContext);
+  const { user, signOut } = useContext(authContext);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMouseOver, setIsMouseOver] = useState(false);
@@ -95,7 +89,7 @@ const Sidebar: FunctionComponent<SidebarProps> = (props) => {
         )}
       </BoardListContainer>
       <AuthInfoContainer>
-        <ProfileImage src={user.photoURL} />
+        <ProfilePicture src={user.photoURL} size="65px" />
         <IconButton
           icon="/assets/settings-light.svg"
           isFullWidth

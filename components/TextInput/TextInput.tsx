@@ -39,12 +39,25 @@ const textContainerStyles = css`
   }
 `;
 
+const disabledStyles = css`
+  // None.
+`;
+
 const Input = styled.input`
   ${textContainerStyles}
+
+  &:disabled {
+    ${disabledStyles};
+  }
 `;
 
 const TextArea = styled.textarea`
   ${textContainerStyles};
+
+  &:disabled {
+    ${disabledStyles};
+  }
+
   max-height: 125px;
   font-family: inherit;
   resize: none;
@@ -55,7 +68,7 @@ export type TextInputProps = {
   placeholder?: string;
   label?: string;
   value: string;
-  setValue: (newValue: string) => void;
+  setValue?: (newValue: string) => void;
 };
 const TextInput: FunctionComponent<TextInputProps> = ({
   label,
@@ -67,13 +80,18 @@ const TextInput: FunctionComponent<TextInputProps> = ({
   const textProps = {
     placeholder,
     value,
-    onChange: ({ target: { value: newValue } }) => setValue(newValue),
+    onChange: ({ target: { value: newValue } }) =>
+      setValue && setValue(newValue),
   };
 
   return (
     <InputContainer>
       <Label>{label}</Label>
-      {isTextArea ? <TextArea {...textProps} /> : <Input {...textProps} />}
+      {isTextArea ? (
+        <TextArea {...textProps} disabled={!setValue} />
+      ) : (
+        <Input {...textProps} disabled={!setValue} />
+      )}
     </InputContainer>
   );
 };
