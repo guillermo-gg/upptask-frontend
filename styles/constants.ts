@@ -35,6 +35,9 @@ export const ELEVATION = {
   focus: css`
     box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.25);
   `,
+  subtle: css`
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+  `,
 };
 
 export const TEXT = {

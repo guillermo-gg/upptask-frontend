@@ -13,13 +13,16 @@ const Container = styled.main`
   background-color: ${COLORS.ui.ui2};
 `;
 
-type PublicContainerProps = {};
+type PublicContainerProps = {
+  hasNavbar?: boolean;
+};
 const PublicContainer: FunctionComponent<PublicContainerProps> = ({
   children,
+  hasNavbar,
 }) => {
   return (
     <Container>
-      <Navbar />
+      {hasNavbar && <Navbar />}
       {children}
     </Container>
   );

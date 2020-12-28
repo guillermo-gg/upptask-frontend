@@ -3,7 +3,6 @@ import { PublicContainer } from "components/PublicContainer";
 import { AuthProvider } from "context/auth/auth.context";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 import { GlobalStyles } from "styles/global";
 
@@ -13,8 +12,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <>
       <GlobalStyles />
       <AuthProvider>
-        {pathname === "/" ? (
-          <PublicContainer>
+        {pathname === "/" || pathname === "/login" || pathname === "/signup" ? (
+          <PublicContainer
+            hasNavbar={!(pathname === "/login" || pathname === "/signup")}
+          >
             <Component {...pageProps} />
           </PublicContainer>
         ) : (

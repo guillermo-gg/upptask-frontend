@@ -30,7 +30,7 @@ const LinksContainer = styled.div`
 
 type NavbarProps = {};
 const Navbar: FunctionComponent<NavbarProps> = (props) => {
-  const { user, signOut, signInWithGoogle } = useContext(authContext);
+  const { user, signOut } = useContext(authContext);
 
   const router = useRouter();
 
@@ -47,8 +47,8 @@ const Navbar: FunctionComponent<NavbarProps> = (props) => {
           </>
         ) : (
           <>
-            <Button onClick={signInWithGoogle}>Log in</Button>
-            <Button isFilled onClick={signInWithGoogle}>
+            <Button onClick={() => router.push("/login")}>Log in</Button>
+            <Button isFilled onClick={() => router.push("/signup")}>
               Sign up
             </Button>
           </>
