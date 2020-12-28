@@ -47,8 +47,14 @@ const Board: FunctionComponent<BoardProps> = (props) => {
   const onDragEnd = ({ source, destination }: DropResult) => {
     setIsDragging(false);
     if (
-      source.droppableId === destination.droppableId &&
-      source.index === destination.index
+      // Same column and spot:
+      (source?.droppableId === destination?.droppableId &&
+        source?.index === destination?.index) ||
+      // Dragging outside of the dropping areas:
+      source?.droppableId ||
+      destination?.droppableId ||
+      !source?.index ||
+      destination?.index
     ) {
       return;
     }
