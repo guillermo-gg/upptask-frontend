@@ -12,7 +12,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <>
       <GlobalStyles />
       <AuthProvider>
-        {pathname === "/" || pathname === "/login" || pathname === "/signup" ? (
+        {pathname === "/" ||
+        pathname === "/login" ||
+        pathname === "/signup" ||
+        pathname.startsWith("/legal") ? (
           <PublicContainer
             hasNavbar={!(pathname === "/login" || pathname === "/signup")}
           >
