@@ -10,6 +10,7 @@ export const COLORS = {
     textGray1: "#626775",
     textGray2: "#3B4B72",
     textGray3: "#9b9da2",
+    textGray4: "#d7d8db",
     white: "#FFFFFF",
   },
   ui: {
@@ -21,6 +22,7 @@ export const COLORS = {
     ui5: "#7F8EB5",
     ui6: "#ABAFB7",
     ui7: "#e7e7e7",
+    ui8: "#00113A",
     red1: "#FF6E6C",
   },
 };

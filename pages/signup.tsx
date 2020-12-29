@@ -12,6 +12,7 @@ const SignUp: FunctionComponent<SignUpProps> = (props) => {
           secondLine: "Log in",
           target: "/login",
         }}
+        includeTnC
       />
     </>
   );

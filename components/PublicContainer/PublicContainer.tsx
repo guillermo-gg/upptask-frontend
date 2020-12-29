@@ -1,3 +1,4 @@
+import { Footer } from "components/PublicContainer/Footer";
 import { Navbar } from "components/PublicContainer/Navbar";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
@@ -21,10 +22,13 @@ const PublicContainer: FunctionComponent<PublicContainerProps> = ({
   hasNavbar,
 }) => {
   return (
-    <Container>
-      {hasNavbar && <Navbar />}
-      {children}
-    </Container>
+    <>
+      <Container>
+        {hasNavbar && <Navbar />}
+        {children}
+      </Container>
+      <Footer />
+    </>
   );
 };
 

@@ -12,8 +12,8 @@ import {
 } from "styles/constants";
 
 const Container = styled.div`
-  height: 450px;
-  width: 400px;
+  height: 500px;
+  width: 450px;
   padding: 50px 75px;
   background-color: ${COLORS.ui.white};
   border-radius: ${STANDARD_BORDER_RADIUS};
@@ -35,6 +35,10 @@ const HeaderSection = styled.div`
   img {
     margin-top: 5px;
   }
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
 `;
 
 const GoogleSignInButton = styled.button`
@@ -63,6 +67,25 @@ const GoogleSignInButton = styled.button`
   }
 `;
 
+const AcceptAgreementContainer = styled.div`
+  color: ${COLORS.text.textGray2};
+  font-size: 0.87rem;
+  text-align: center;
+  margin-top: 20px;
+
+  a {
+    ${TRANSITION};
+
+    &:visited {
+      color: inherit;
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+`;
+
 const FooterText = styled.div`
   ${TEXT.labelSmall};
   color: ${COLORS.text.textGray2};
@@ -79,10 +102,12 @@ type AuthCardProps = {
     secondLine: string; // Alternative: if in "Log in" => "Sign up"
     target: string; // Target page
   };
+  includeTnC?: boolean;
 };
 const AuthCard: FunctionComponent<AuthCardProps> = ({
   headerCopy,
   footerCopy,
+  includeTnC,
 }) => {
   const { signInWithGoogle, userId } = useContext(authContext);
 
@@ -98,10 +123,21 @@ const AuthCard: FunctionComponent<AuthCardProps> = ({
         {headerCopy}
         <img src="/assets/logo-dark.svg" alt="Logo" />
       </HeaderSection>
-      <GoogleSignInButton type="button" onClick={signInWithGoogle}>
-        <img src="/assets/google-icon.svg" alt="Google icon" />
-        <span>Continue with Google</span>
-      </GoogleSignInButton>
+      <ButtonContainer>
+        <GoogleSignInButton type="button" onClick={signInWithGoogle}>
+          <img src="/assets/google-icon.svg" alt="Google icon" />
+          <span>Continue with Google</span>
+        </GoogleSignInButton>
+
+        {includeTnC && (
+          <AcceptAgreementContainer>
+            By creating a Upptask account, you&apos;re agreeing to accept our
+            <Link href="/legal/terms-and-conditions">
+              <a> Terms &amp; Conditions</a>
+            </Link>
+          </AcceptAgreementContainer>
+        )}
+      </ButtonContainer>
       <FooterText>
         <div>{footerCopy.firstLine}</div>
         <Link href={footerCopy.target}>
