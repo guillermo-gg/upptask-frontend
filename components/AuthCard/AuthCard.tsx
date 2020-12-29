@@ -114,7 +114,7 @@ const AuthCard: FunctionComponent<AuthCardProps> = ({
   const router = useRouter();
 
   useEffect(() => {
-    if (userId) router.push("/");
+    if (userId) router.push("/boards");
   }, [router, userId]);
 
   return (
