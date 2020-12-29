@@ -1,3 +1,4 @@
+import { Seo } from "components/Seo";
 import fs from "fs";
 import path from "path";
 import { Converter } from "showdown";
@@ -88,6 +89,7 @@ const LegalTermsPage: FunctionComponent<LegalTermsPageProps> = ({
 }) => {
   return (
     <PageContainer>
+      <Seo title={`${title} | Upptask`} />
       <Title>{title}</Title>
       <LastUpdated>Last updated: {lastUpdated}</LastUpdated>
       <ContentCard dangerouslySetInnerHTML={{ __html: content }} />

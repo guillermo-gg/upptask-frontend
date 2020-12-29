@@ -2,6 +2,7 @@ import { Button } from "components/Button";
 import { PrivateContainer } from "components/PrivateContainer";
 import { HeaderTypes } from "components/PrivateContainer/Header";
 import { ProfilePicture } from "components/ProfilePicture";
+import { Seo } from "components/Seo";
 import { TextInput } from "components/TextInput";
 import { authContext } from "context/auth/auth.context";
 import React, { FunctionComponent, useContext } from "react";
@@ -53,6 +54,7 @@ const Settings: FunctionComponent<SettingsProps> = (props) => {
         description: "Manage your account",
       }}
     >
+      <Seo title="Settings | Upptask" />
       <SettingsContainer>
         <TwoColumnsContainer>
           <ProfilePicture src={user?.photoURL} size="250px" />

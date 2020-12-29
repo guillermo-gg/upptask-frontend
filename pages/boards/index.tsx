@@ -4,6 +4,7 @@ import { CardSize } from "components/Card/styles";
 import { BoardOptionsModal } from "components/Modal";
 import { PrivateContainer } from "components/PrivateContainer";
 import { HeaderTypes } from "components/PrivateContainer/Header";
+import { Seo } from "components/Seo";
 
 import { boardContext } from "context/board/board.context";
 import { useRouter } from "next/router";
@@ -32,6 +33,7 @@ const Boards: FunctionComponent<BoardsProps> = () => {
 
   return (
     <>
+      <Seo title="Your boards | Upptask" />
       <PrivateContainer.Content
         header={{
           type: HeaderTypes.REGULAR,

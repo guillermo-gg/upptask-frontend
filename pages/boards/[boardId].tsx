@@ -3,6 +3,7 @@ import { Kanban } from "components/Kanban";
 import { BoardOptionsModal, Modal } from "components/Modal";
 import { PrivateContainer } from "components/PrivateContainer";
 import { HeaderTypes } from "components/PrivateContainer/Header";
+import { Seo } from "components/Seo";
 import { authContext } from "context/auth/auth.context";
 import { tasksContext, TasksProvider } from "context/tasks/tasks.context";
 import { useRouter } from "next/router";
@@ -72,6 +73,7 @@ const Board: FunctionComponent<BoardProps> = (props) => {
 
   return (
     <>
+      <Seo title={`${title} | Upptask`} />
       <PrivateContainer.Content
         header={{
           type: HeaderTypes.BIG,
