@@ -131,9 +131,9 @@ const AuthCard: FunctionComponent<AuthCardProps> = ({
 
         {includeTnC && (
           <AcceptAgreementContainer>
-            By creating a Upptask account, you&apos;re agreeing to accept our
+            By creating a Upptask account, you&apos;re agreeing to accept our{" "}
             <Link href="/legal/terms-and-conditions">
-              <a> Terms &amp; Conditions</a>
+              <a>Terms &amp; Conditions</a>
             </Link>
           </AcceptAgreementContainer>
         )}
