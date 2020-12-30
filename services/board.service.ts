@@ -29,10 +29,12 @@ export const createNewBoardDoc = async ({
   userId,
   title,
   description,
+  initialColumns,
 }: {
   userId: string;
   title: string;
   description?: string;
+  initialColumns?: ColumnT[];
 }): Promise<string> => {
   const emptyColumns: ColumnT[] = [
     {
@@ -58,7 +60,7 @@ export const createNewBoardDoc = async ({
       description: description ?? "",
       userId,
       lastUsed: Date.now(),
-      columns: emptyColumns,
+      columns: initialColumns ?? emptyColumns,
     })
   ).id;
 };

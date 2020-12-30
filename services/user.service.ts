@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
+import { getFirstBoardParams } from "utils/initial-data";
 import { db } from "./firebase.service";
+import { createNewBoardDoc } from "./board.service";
 
 export type AuthUser = {
   displayName: string | null;
@@ -19,10 +21,20 @@ const usersCollRef = db.collection("users");
 /**
  * Creates / Updates a user in Firestore.
  */
-export const createUser = async (uid: string, userData: User): Promise<void> =>
+export const createUser = async (
+  uid: string,
+  userData: User
+): Promise<void> => {
   // Update user data with new info from Auth.
-  usersCollRef.doc(uid).set({ uid, ...userData }, { merge: true });
+  usersCollRef
+    .doc(uid)
+    .get()
+    .then(({ exists }) => {
+      if (!exists) createNewBoardDoc({ userId: uid, ...getFirstBoardParams() });
+    });
 
+  return usersCollRef.doc(uid).set({ uid, ...userData }, { merge: true });
+};
 /**
  * Keeps user updated.
  */
