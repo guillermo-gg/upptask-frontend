@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import { ColumnT } from "services/board.service";
 import styled, { FlattenSimpleInterpolation } from "styled-components";
 
 import { Pill } from "components/Pill";
@@ -10,6 +11,7 @@ import {
   TRANSITION,
 } from "styles/constants";
 import { flexCenterRow } from "styles/mixins";
+import { countTotalTasks } from "utils/board-utils";
 import { CardContainer, CardSize } from "./styles";
 
 const TaskCardContent = styled.button<{
@@ -53,13 +55,22 @@ const BottomContainer = styled.div`
   justify-content: space-between;
   width: 100%;
 `;
-const LastUsed = styled.span`
+const LastUsed = styled.div`
   ${TEXT.labelExtraSmall};
   color: ${COLORS.text.textGray1};
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  span:not(:last-child) {
+    margin-bottom: 5px;
+  }
 `;
 
 type BoardCardProps = {
   title: string;
+  columns: ColumnT[];
   description?: string;
   lastUsed?: number;
   onClick: () => void;
@@ -68,6 +79,7 @@ type BoardCardProps = {
 const BoardCard: FunctionComponent<BoardCardProps> = ({
   title,
   description,
+  columns,
   lastUsed,
   onClick,
   containerStyles,
@@ -80,8 +92,11 @@ const BoardCard: FunctionComponent<BoardCardProps> = ({
           <Description>{description ?? ""}</Description>
         </div>
         <BottomContainer>
-          <Pill>34</Pill>
-          <LastUsed>{lastUsed}</LastUsed>
+          <Pill>{countTotalTasks(columns)}</Pill>
+          <LastUsed>
+            <span>Last seen:</span>
+            <span>{new Date(lastUsed).toLocaleString("en-GB")}</span>
+          </LastUsed>
         </BottomContainer>
       </TaskCardContent>
     </CardContainer>

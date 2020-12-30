@@ -1,4 +1,3 @@
-import { IconButton } from "components/Button";
 import React, { FunctionComponent, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled, { css } from "styled-components";

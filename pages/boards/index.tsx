@@ -42,10 +42,11 @@ const Boards: FunctionComponent<BoardsProps> = () => {
         }}
       >
         <BoardsGrid>
-          {boards.map(({ title, description, id, lastUsed }) => (
+          {boards.map(({ title, description, columns, id, lastUsed }) => (
             <BoardCard
               title={title}
               description={description}
+              columns={columns}
               key={id}
               containerStyles={cardStyles}
               onClick={() => router.push(`${router.pathname}/${id}`)}
