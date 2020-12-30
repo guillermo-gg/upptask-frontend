@@ -45,7 +45,7 @@ type UpdateTaskDetailsCallback = (
 type DeleteTaskCallback = (
   sourceColumnId: string,
   sourceTaskIndex: number
-) => TaskT;
+) => void;
 type MoveTaskCallback = (
   sourceColumnId: string,
   sourceTaskIndex: number,
@@ -91,22 +91,6 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
     if (boardId) syncBoard({ boardId, setColumns, setTitle, setDescription });
   }, [boardId]);
 
-  // Update Firestore:
-  useEffect(() => {
-    if (!columns) return;
-    updateFirestoreBoard(boardId, { columns });
-  }, [columns, boardId]);
-
-  useEffect(() => {
-    if (!title) return;
-    updateFirestoreBoard(boardId, { title });
-  }, [title, boardId]);
-
-  useEffect(() => {
-    if (!description) return;
-    updateFirestoreBoard(boardId, { description });
-  }, [description, boardId]);
-
   const updateBoardLastUsed: UpdateBoardLastUsedCallback = () => {
     return updateFirestoreBoard(boardId, { lastUsed: Date.now() });
   };
@@ -135,11 +119,12 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
       description: taskDescription ?? "",
     };
 
-    setColumns((currentColumns) => {
-      // Append to the tasks of the target column.
-      return produce(currentColumns, (draft) => {
-        draft[draft.findIndex(({ id }) => id === columnId)].tasks.push(newTask);
-      });
+    const newColumns = produce(columns, (draft) => {
+      draft[draft.findIndex(({ id }) => id === columnId)].tasks.push(newTask);
+    });
+
+    updateFirestoreBoard(boardId, {
+      columns: newColumns,
     });
   };
 
@@ -148,44 +133,53 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
     taskId,
     columnId
   ) => {
-    setColumns((currentColumns) => {
-      // Append to the tasks of the target column.
-      return produce(currentColumns, (draft) => {
-        const columnIndex = draft.findIndex(({ id }) => id === columnId);
-        const taskIndex = draft[columnIndex].tasks.findIndex(
-          ({ id }) => id === taskId
-        );
-        draft[columnIndex].tasks[taskIndex].title = newTitle;
-        draft[columnIndex].tasks[taskIndex].description = newDescription;
-      });
+    const newColumns = produce(columns, (draft) => {
+      const columnIndex = draft.findIndex(({ id }) => id === columnId);
+      const taskIndex = draft[columnIndex].tasks.findIndex(
+        ({ id }) => id === taskId
+      );
+      draft[columnIndex].tasks[taskIndex].title = newTitle;
+      draft[columnIndex].tasks[taskIndex].description = newDescription;
     });
+
+    updateFirestoreBoard(boardId, {
+      columns: newColumns,
+    });
+  };
+
+  /**
+   * Helper used when only deleting a task, as well as an intermediate step
+   * when moving a task.
+   */
+  const getDeleteStatus = (
+    currentColumns: ColumnT[],
+    sourceColumnId: string,
+    sourceTaskIndex: number
+  ) => {
+    const originTaskList =
+      currentColumns[
+        currentColumns.findIndex(({ id }) => id === sourceColumnId)
+      ].tasks;
+
+    const targetTask = originTaskList[sourceTaskIndex];
+
+    const newColumns = produce(currentColumns, (draft) => {
+      draft[
+        draft.findIndex(({ id }) => id === sourceColumnId)
+      ].tasks = originTaskList.filter((_, index) => index !== sourceTaskIndex);
+    });
+
+    return { newColumns, targetTask };
   };
 
   const deleteTask: DeleteTaskCallback = (
     sourceColumnId: string,
     sourceTaskIndex: number
   ) => {
-    let targetTask: TaskT = null;
-
-    setColumns((currentColumns) => {
-      // Task list in the target column
-      const originTaskList =
-        currentColumns[
-          currentColumns.findIndex(({ id }) => id === sourceColumnId)
-        ].tasks;
-
-      targetTask = originTaskList[sourceTaskIndex];
-
-      return produce(currentColumns, (draft) => {
-        draft[
-          draft.findIndex(({ id }) => id === sourceColumnId)
-        ].tasks = originTaskList.filter(
-          (_, index) => index !== sourceTaskIndex
-        );
-      });
+    updateFirestoreBoard(boardId, {
+      columns: getDeleteStatus(columns, sourceColumnId, sourceTaskIndex)
+        .newColumns,
     });
-
-    return targetTask;
   };
 
   const moveTask: MoveTaskCallback = (
@@ -194,16 +188,26 @@ export const TasksProvider: FunctionComponent<TaskProviderProps> = ({
     destColumnId: string,
     destTaskIndex: number
   ) => {
-    const targetTask = deleteTask(sourceColumnId, sourceTaskIndex);
-
     setColumns((currentColumns) => {
-      return produce(currentColumns, (draft) => {
+      const { targetTask, newColumns: columnsAfterDelete } = getDeleteStatus(
+        currentColumns,
+        sourceColumnId,
+        sourceTaskIndex
+      );
+
+      const newColumns = produce(columnsAfterDelete, (draft) => {
         draft[draft.findIndex(({ id }) => id === destColumnId)].tasks.splice(
           destTaskIndex,
           0,
           targetTask
         );
       });
+
+      updateFirestoreBoard(boardId, {
+        columns: newColumns,
+      });
+
+      return newColumns;
     });
   };
 
