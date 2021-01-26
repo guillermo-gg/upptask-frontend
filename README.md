@@ -1,30 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![Screenshot](readme-assets/mockup-2.png)
 
-## Getting Started
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+* [About the Project](#about)
+    * [Built With](#built-using)
+* [License](#license)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.ts`. The page auto-updates as you edit the file.
 
-## Learn More
+## About
 
-To learn more about Next.js, take a look at the following resources:
+SaaS product based on a Kanban system intended for desktop usage. Designed,
+architectured and coded completely by me. Built with TypeScript - NextJS,
+Styled-Components and Firebase for authentication and database (Firestore).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+[View live](https://upptask.com/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Screenshots
 
-## Deploy on Vercel
+![Screenshot](readme-assets/mockup-1.png)
+![Screenshot](readme-assets/mockup-3.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Built With
+
+* [NestJS](https://nextjs.org/)
+* [TypeScript](https://www.typescriptlang.org/)
+* [Styled-Components](https://styled-components.com/)
+* [Firebase](https://firebase.google.com/)
+
+
+<!-- LICENSE -->
+## License
+
+&copy; Copyright 2020, Guillermo Gómez González
