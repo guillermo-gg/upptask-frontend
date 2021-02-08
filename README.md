@@ -17,6 +17,10 @@ Styled-Components and Firebase for authentication and database (Firestore).
 
 [View live](https://upptask.com/)
 
+## Demo
+
+![Demo](readme-assets/demo.gif)
+
 ## Screenshots
 
 ![Screenshot](readme-assets/mockup-1.png)
